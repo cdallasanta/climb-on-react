@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import "../stylesheets/elements.scss";
 import Element from '../components/element';
 
 class Dashboard extends Component {
@@ -21,7 +22,7 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div className="Dashboard">
+      <div className="dashboard">
         {this.renderElements()}
       </div>
     )
