@@ -7,23 +7,38 @@
   left: 0;
   width: 100%;
   box-shadow: 0 0 5px 10px #61671B;
+  padding-top: 5px;
 
   display: flex;
   justify-content: flex-end;
   align-items: center;
 
   z-index: 100;
+  overflow: visible;
+
+  img {
+    height: 7vh;
+  }
+
+  a {
+    color: #AB9F55;
+    font-weight: bold;
+  }
+
+  .nav-link {
+    height: 100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  a.selected {
+    background: #AB9F55;
+    color: #2A4108;
+    box-shadow: 0 0 5px 1vh #AB9F55;
+  }
 }
 
 .header > * {
   margin: 0px 20px;
-}
-
-.header img {
-  height: 7vh;
-}
-
-.header a {
-  color: #AB9F55;
-  font-weight: bold;
 }
