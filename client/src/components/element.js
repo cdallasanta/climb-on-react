@@ -13,7 +13,7 @@ const Element = ({data: {name, id}}) => {
         </ul>
       </div>
       
-      <img src={require(`../../public/images/${name.replace(/[^0-9a-z]/gi, "")}.png`)} alt={`${name}`} />
+      <img src={require(`../images/${name.replace(/[^0-9a-z]/gi, "")}.png`)} alt={`${name}`} />
     </div>
   )
 }
