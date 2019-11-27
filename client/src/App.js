@@ -2,7 +2,7 @@ import React from 'react';
 import "./stylesheets/global.scss";
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Dashboard from './containers/dashboard';
-import Elements from './containers/elements';
+import PreuseInspectionContainer from './containers/preuseInspectionContainer';
 import Header from './components/header';
 
 function App() {
@@ -13,8 +13,8 @@ function App() {
 
         <div id="content">
           <Switch>
-            <Route path="/preuse_inspections" component={Elements} />
-            <Route path="/preuse_inspections" component={Elements} />
+            <Route path="/preuse_inspections" component={PreuseInspectionContainer} />
+            <Route path="/preuse_inspections" component={PreuseInspectionContainer} />
             <Route path="/" component={Dashboard} />
           </Switch>
         </div>

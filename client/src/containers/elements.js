@@ -16,7 +16,7 @@ class Elements extends Component {
 
   renderElements= () => {
     return this.state.elements.map(elem => {
-      return <Element data={elem} key={elem.id} />;
+      return <Element data={elem} key={elem.id} location={this.props.location} />;
     });
   }
 
