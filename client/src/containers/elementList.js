@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import "../stylesheets/elements.scss";
 import Element from '../components/elementCard';
 
-class Elements extends Component {
+class ElementList extends Component {
   state = {
     elements: []
   }
@@ -29,4 +29,4 @@ class Elements extends Component {
   }
 }
 
-export default Elements;
+export default ElementList;

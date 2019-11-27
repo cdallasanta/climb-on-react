@@ -30,30 +30,30 @@ body {
       rgba(0, 0, 0, .6),
       rgba(0, 0, 0, 0)
     );
-    display:flex;
-    align-items: center;
-    justify-content: center;
-}
 
-.element-card h3 {
-  color: white;
-  padding-left: 20px;
-  text-align: center;
-}
+  display:flex;
+  align-items: center;
+  justify-content: center;
 
-.element-card img {
-  position: absolute;
-  top: -40px;
-  opacity: .6;
-  z-index: -1;
-  width: 100%;
-  transition: opacity .3s;
+  h3 {
+    color: white;
+    padding-left: 20px;
+    text-align: center;
+  }
+
+  img {
+    position: absolute;
+    top: -40px;
+    opacity: .6;
+    z-index: -1;
+    width: 100%;
+    transition: opacity .3s;
+  }
 }
 
 .element-card:hover > img {
-  opacity: .9;
+  opacity: 1;
 }
-
 
 // elements show and edit page
 #show-element, #edit-element {
