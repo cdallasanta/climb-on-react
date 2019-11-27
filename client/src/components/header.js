@@ -5,15 +5,15 @@ import {Link} from 'react-router-dom';
 const Header = () => {
   return(
     <header>
-      <div class="header">
-        <div class='nav-item'>
-          <Link to="/elements" class="nav-link">Elements</Link>
+      <div className="header">
+        <div className='nav-item'>
+          <Link to="/elements" className="nav-link">Elements</Link>
         </div>
-        <div class='nav-item'>
-          <Link to="/elements" class="nav-link">My Profile (broken)</Link>
+        <div className='nav-item'>
+          <Link to="/elements" className="nav-link">My Profile (broken)</Link>
         </div>
-        <div class='nav-item'>
-          <Link to="/elements" class="nav-link">Logout (broken)</Link>
+        <div className='nav-item'>
+          <Link to="/elements" className="nav-link">Logout (broken)</Link>
         </div>
         <img src="" alt="logo" />
       </div>
