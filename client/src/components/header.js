@@ -15,7 +15,7 @@ const Header = () => {
         <div className='nav-item'>
           <Link to="/elements" className="nav-link">Logout (broken)</Link>
         </div>
-        <img src="" alt="logo" />
+        <img src={require(`../images/logo.png`)} alt="logo" />
       </div>
     </header>
   );
