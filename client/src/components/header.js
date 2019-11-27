@@ -4,19 +4,17 @@ import {Link} from 'react-router-dom';
 
 const Header = () => {
   return(
-    <header>
-      <div className="header">
-        <div className='nav-item'>
-          <Link to="/elements" className="nav-link">Elements</Link>
-        </div>
-        <div className='nav-item'>
-          <Link to="/elements" className="nav-link">My Profile (broken)</Link>
-        </div>
-        <div className='nav-item'>
-          <Link to="/elements" className="nav-link">Logout (broken)</Link>
-        </div>
-        <img src={require(`../images/logo.png`)} alt="logo" />
+    <header className="header">
+      <div className='nav-item'>
+        <Link to="/elements" className="nav-link">Elements</Link>
       </div>
+      <div className='nav-item'>
+        <Link to="/elements" className="nav-link">My Profile (broken)</Link>
+      </div>
+      <div className='nav-item'>
+        <Link to="/elements" className="nav-link">Logout (broken)</Link>
+      </div>
+      <img src={require(`../images/logo.png`)} alt="logo" />
     </header>
   );
 };
