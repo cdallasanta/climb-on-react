@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import "../stylesheets/elements.scss";
 import Element from '../components/elementCard';
 
-class Dashboard extends Component {
+class Elements extends Component {
   state = {
     elements: []
   }
@@ -22,11 +22,11 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div className="dashboard">
-        Dashboard
+      <div className="elements" id="elements-list">
+        {this.renderElements()}
       </div>
     )
   }
 }
 
-export default Dashboard;
+export default Elements;
