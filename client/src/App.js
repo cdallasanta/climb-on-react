@@ -3,7 +3,7 @@ import "./stylesheets/global.scss";
 import {BrowserRouter as Router} from 'react-router-dom';
 import axios from 'axios';
 import Home from './containers/home';
-import Login from './containers/user/login';
+import Login from './containers/sessions/login';
 
 class App extends Component {
   constructor(props){
