@@ -28,7 +28,7 @@ class App extends Component {
   }
 
   loginStatus = () => {
-    axios.get('/logged_in', {withCredentials: true})
+    axios.get('http://localhost:3001/logged_in', {withCredentials: false})
       .then(resp => {
         if (resp.data.logged_in){
           this.handleLogin(resp);
@@ -45,7 +45,7 @@ class App extends Component {
 
   render() {
     if (this.state.isLoggedIn) {
-      return (<Home current_user={this.state.user} />);
+      return (<Home {...this.props} currentUser={this.state.user} />);
     } else {
       return (<Login />);
     }

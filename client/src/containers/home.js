@@ -10,13 +10,13 @@ function Home() {
   return (
     <Router>
       <div className="App">
-        <Header />
+        <Header  {...this.props} />
 
         <div id="content">
           <Switch>
-            <Route path="/preuse_inspections" component={PreuseInspectionContainer} {...props} />
-            <Route path="/periodic_inspections" component={PeriodicInspectionContainer} {...props} />
-            <Route path="/" component={Dashboard} {...props} />
+            <Route path="/preuse_inspections" component={PreuseInspectionContainer} {...this.props} />
+            <Route path="/periodic_inspections" component={PeriodicInspectionContainer} {...this.props} />
+            <Route path="/" component={Dashboard} {...this.props} />
           </Switch>
         </div>
       </div>

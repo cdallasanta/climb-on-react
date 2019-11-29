@@ -13,7 +13,7 @@ class Login extends Component {
   }
 
   handleChange = event => {
-    const {name, value} = event;
+    const {name, value} = event.target;
     this.setState({
       [name]: value
     });
@@ -21,35 +21,70 @@ class Login extends Component {
 
   handleSubmit = event =>{
     event.preventDefault();
-    // more to do later
     
+    const {email, password} = this.state;
+    let user = {
+      email: email,
+      password: password
+    }
+
+    axios.post('http://localhost:3001/login', {user}, {withCredentials: true})
+      .then(resp => {
+        if (resp.data.logged_in){
+          this.props.handleLogin(resp.data);
+          this.redirect();
+        } else {
+          this.setState({errors: resp.data.errors});
+        }
+      })
+      .catch(error => console.log('api error:', error));
+  }
+
+  redirect() {
+    this.props.history.push('/');
+  }
+
+  handleErrors = () => {
+    return (
+      <div className="alert alert-warning">
+        <ul>
+          {this.state.errors.localeCompare(error =>{
+            return <li key={error}>{error}</li>
+          })}
+        </ul>
+      </div>
+    )
   }
 
   render() {
     const {email, password} = this.state;
 
     return(
-      <div id="login-form-div">
-        <h1>Welcome to<br />
-        Climb On!</h1>
+      <div className="content">
+        {this.state.errors ? this.handleErrors() : null}
 
-        <form onSubmit={this.handleSubmit} id="login-form">
-          <input placeholder="email"
-            type="email"
-            name="email"
-            value={email}
-            onChange={this.handleChange} />
+        <div id="login-form-div">
+          <h1>Welcome to<br />
+          Climb On!</h1>
 
-          <input placeholder="password"
-            type="password"
-            name="password"
-            value={password}
-            onChange={this.handleChange} />
+          <form onSubmit={this.handleSubmit} id="login-form">
+            <input placeholder="email"
+              type="email"
+              name="email"
+              value={email}
+              onChange={this.handleChange} />
 
-          <button placeholder="submit" type="submit">
-            Log In
-          </button>
-        </form>
+            <input placeholder="password"
+              type="password"
+              name="password"
+              value={password}
+              onChange={this.handleChange} />
+
+            <button placeholder="submit" type="submit">
+              Log In
+            </button>
+          </form>
+        </div>
       </div>
     )
   }
