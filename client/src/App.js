@@ -45,7 +45,7 @@ class App extends Component {
 
   render() {
     if (this.state.isLoggedIn) {
-      return (<Home />);
+      return (<Home current_user={this.state.user} />);
     } else {
       return (<Login />);
     }

@@ -14,9 +14,9 @@ function Home() {
 
         <div id="content">
           <Switch>
-            <Route path="/preuse_inspections" component={PreuseInspectionContainer} />
-            <Route path="/periodic_inspections" component={PeriodicInspectionContainer} />
-            <Route path="/" component={Dashboard} />
+            <Route path="/preuse_inspections" component={PreuseInspectionContainer} {...props} />
+            <Route path="/periodic_inspections" component={PeriodicInspectionContainer} {...props} />
+            <Route path="/" component={Dashboard} {...props} />
           </Switch>
         </div>
       </div>

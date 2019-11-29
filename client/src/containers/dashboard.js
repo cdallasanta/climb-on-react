@@ -24,6 +24,7 @@ class Dashboard extends Component {
     return (
       <div className="dashboard">
         Dashboard
+        {this.props.current_user.id}
       </div>
     )
   }
