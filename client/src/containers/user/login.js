@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import '../../stylesheets/sessions.scss';
+import { withRouter } from "react-router";
 import axios from 'axios';
 
 class Login extends Component {
@@ -8,12 +9,15 @@ class Login extends Component {
     this.state = {
       email: "",
       password: "",
-      errors: ""
+      errors: "",
+      remember: false
     };
   }
 
   handleChange = event => {
-    const {name, value} = event.target;
+    const {target} = event
+    const {name} = target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({
       [name]: value
     });
@@ -28,10 +32,10 @@ class Login extends Component {
       password: password
     }
 
-    axios.post('http://localhost:3001/login', {user}, {withCredentials: true})
+    axios.post('http://localhost:3001/login', {user}, {withCredentials: false})
       .then(resp => {
         if (resp.data.logged_in){
-          this.props.handleLogin(resp.data);
+          this.props.handleLogin(resp.data, this.state.remember);
           this.redirect();
         } else {
           this.setState({errors: resp.data.errors});
@@ -57,7 +61,7 @@ class Login extends Component {
   }
 
   render() {
-    const {email, password} = this.state;
+    const {email, password, remember} = this.state;
 
     return(
       <div className="content">
@@ -80,6 +84,13 @@ class Login extends Component {
               value={password}
               onChange={this.handleChange} />
 
+            <input
+              type="checkbox"
+              name="remember"
+              checked={remember}
+              onChange={this.handleChange} />
+            <label htmlFor="remember">Remember Me</label>
+
             <button placeholder="submit" type="submit">
               Log In
             </button>
@@ -90,4 +101,4 @@ class Login extends Component {
   }
 };
 
-export default Login;
+export default withRouter(Login);

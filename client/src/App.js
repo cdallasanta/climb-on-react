@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import "./stylesheets/global.scss";
+import {BrowserRouter as Router} from 'react-router-dom';
 import axios from 'axios';
 import Home from './containers/home';
 import Login from './containers/user/login';
@@ -9,15 +10,19 @@ class App extends Component {
     super(props);
     this.state = {
       isLoggedIn: false,
-      user: {}
+      currentUser: {}
     }
   }
 
-  handleLogin = (data) => {
+  handleLogin = (data, remember = true) => {
     this.setState({
       isLoggedIn: true,
-      user: data.user
+      currentUser: data.user
     });
+
+    if(remember){
+      localStorage.setItem("currentUser", JSON.stringify(data.user));
+    }
   }
 
   handleLogout = () => {
@@ -25,18 +30,26 @@ class App extends Component {
       isLoggedIn: false,
       user: {}
     });
+    localStorage.removeItem("currentUser");
   }
 
   loginStatus = () => {
-    axios.get('http://localhost:3001/logged_in', {withCredentials: false})
-      .then(resp => {
-        if (resp.data.logged_in){
-          this.handleLogin(resp);
-        } else {
-          this.handleLogout();
-        }
-      })
-      .catch(error => console.log('api errors:', error));
+    if (localStorage.getItem("currentUser") !== null){
+      this.handleLogin({
+        loggedIn: true,
+        user: JSON.parse(localStorage.getItem("currentUser"))
+      });
+    } else {
+      this.handleLogout();
+    }
+    // axios.get('http://localhost:3001/logged_in')
+    //   .then(resp => {
+    //     if (resp.data.logged_in){
+    //       this.handleLogin(resp);
+    //     } else {
+    //     }
+    //   })
+    //   .catch(error => console.log('api errors:', error));
   }
 
   componentDidMount() {
@@ -45,9 +58,17 @@ class App extends Component {
 
   render() {
     if (this.state.isLoggedIn) {
-      return (<Home {...this.props} currentUser={this.state.user} />);
+      return (
+        <Router>
+          <Home {...this.props} currentUser={this.state.currentUser} handleLogout={this.handleLogout} />
+        </Router>
+      );
     } else {
-      return (<Login />);
+      return (
+        <Router>
+          <Login {...this.props} handleLogin={this.handleLogin} />
+        </Router>
+      );
     }
   }
 }
