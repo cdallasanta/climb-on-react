@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
     else
       render json: {
         status: 401,
-        errors: ["no user found", "credentials did not match"]
+        errors: ["Email and password did not match a user on file. Please try again."]
       }
     end
   end

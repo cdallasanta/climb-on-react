@@ -26,7 +26,7 @@ class Login extends Component {
   handleSubmit = event =>{
     event.preventDefault();
     
-    const {email, password} = this.state;
+    const {email, password, remember} = this.state;
     let user = {
       email: email,
       password: password
@@ -35,24 +35,30 @@ class Login extends Component {
     axios.post('http://localhost:3001/login', {user}, {withCredentials: false})
       .then(resp => {
         if (resp.data.logged_in){
-          this.props.handleLogin(resp.data, this.state.remember);
+          this.props.handleLogin(resp.data, remember);
           this.redirect();
         } else {
+          this.state({
+            email: "",
+            password: "",
+            errors: "",
+            remember: false
+          });
           this.setState({errors: resp.data.errors});
         }
       })
       .catch(error => console.log('api error:', error));
   }
 
-  redirect() {
+  redirect = () => {
     this.props.history.push('/');
   }
 
   handleErrors = () => {
     return (
-      <div className="alert alert-warning">
+      <div className="alert alert-danger">
         <ul>
-          {this.state.errors.localeCompare(error =>{
+          {this.state.errors.map(error =>{
             return <li key={error}>{error}</li>
           })}
         </ul>

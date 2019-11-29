@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import "./stylesheets/global.scss";
-import {BrowserRouter as Router} from 'react-router-dom';
+import { withRouter} from 'react-router-dom';
 import axios from 'axios';
 import Home from './containers/home';
 import Login from './containers/sessions/login';
@@ -31,6 +31,7 @@ class App extends Component {
       user: {}
     });
     localStorage.removeItem("currentUser");
+    this.props.history.push('/');
   }
 
   loginStatus = () => {
@@ -59,18 +60,14 @@ class App extends Component {
   render() {
     if (this.state.isLoggedIn) {
       return (
-        <Router>
           <Home {...this.props} currentUser={this.state.currentUser} handleLogout={this.handleLogout} />
-        </Router>
       );
     } else {
       return (
-        <Router>
           <Login {...this.props} handleLogin={this.handleLogin} />
-        </Router>
       );
     }
   }
 }
 
-export default App;
+export default withRouter(App);
