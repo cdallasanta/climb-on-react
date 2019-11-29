@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import "./stylesheets/global.scss";
 import axios from 'axios';
 import Home from './containers/home';
-import Login from './containers/users/login';
+import Login from './containers/user/login';
 
 class App extends Component {
   constructor(props){
@@ -44,17 +44,11 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <BrowserRouter>
-          <Switch>
-            <Route exact path='/' component={}/>
-            <Route exact path='/login' component={}/>
-            <Route exact path='/signup' component={}/>
-          </Switch>
-        </BrowserRouter>
-      </div>
-    );
+    if (this.state.isLoggedIn) {
+      return (<Home />);
+    } else {
+      return (<Login />);
+    }
   }
 }
 

@@ -1,10 +1,10 @@
 import React from 'react';
-import "./stylesheets/global.scss";
+import "../stylesheets/global.scss";
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import Dashboard from './containers/dashboard';
-import PreuseInspectionContainer from './containers/preuseInspectionContainer';
-import PeriodicInspectionContainer from './containers/periodicInspectionContainer';
-import Header from './components/header';
+import Dashboard from './dashboard';
+import PreuseInspectionContainer from './inspections/preuseInspectionContainer';
+import PeriodicInspectionContainer from './inspections/periodicInspectionContainer';
+import Header from '../components/header';
 
 function Home() {
   return (
