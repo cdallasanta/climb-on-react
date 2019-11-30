@@ -7,8 +7,10 @@ class PreuseInspectionContainer extends Component {
     return (
       <Router>
         <Switch>
-          <Route path="/preuse_inspections/new" component={ElementList} />
-          <Route exact path="/preuse_inspections" component={ElementList} />
+          <Route path="/preuse_inspections/new" render={props =>(
+                <ElementList {...props} />)} />
+          <Route exact path="/preuse_inspections" render={props =>(
+                <ElementList {...props} />)} />
         </Switch>
       </Router>
     )

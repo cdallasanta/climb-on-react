@@ -11,20 +11,20 @@ class Home extends Component {
     return (
       <div className="App">
         <Header  {...this.props} />
-  
+
         <div id="content">
             
           <Router>
             <Switch>
-              <Route path="/preuse_inspections" render={props =>(
-                <PreuseInspectionContainer {...props} />
-              )} />
-              <Route path="/periodic_inspections" render={props =>(
-                <PeriodicInspectionContainer {...props} />
-              )} />
-              <Route path="/" render={props =>(
-                <Dashboard {...props} currentUser={this.props.currentUser} />
-              )} />
+              <Route exact path="/preuse_inspections"
+                render={(props) => <PreuseInspectionContainer currentUser={props.currentUser} />}
+              />
+              <Route exact path="/periodic_inspections"
+                render={(props) => <PeriodicInspectionContainer currentUser={props.currentUser} />}
+              />
+              <Route exact path="/"
+                render={(props) => <Dashboard currentUser={props.currentUser} />}
+              />
             </Switch>
           </Router>
         </div>

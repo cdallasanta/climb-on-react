@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import "./stylesheets/global.scss";
 import { withRouter} from 'react-router-dom';
-import axios from 'axios';
 import Home from './containers/home';
 import Login from './containers/sessions/login';
 
@@ -43,14 +42,6 @@ class App extends Component {
     } else {
       this.handleLogout();
     }
-    // axios.get('http://localhost:3001/logged_in')
-    //   .then(resp => {
-    //     if (resp.data.logged_in){
-    //       this.handleLogin(resp);
-    //     } else {
-    //     }
-    //   })
-    //   .catch(error => console.log('api errors:', error));
   }
 
   componentDidMount() {
