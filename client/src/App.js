@@ -33,6 +33,10 @@ class App extends Component {
     this.loginStatus();
   }
 
+  componentDidUpdate(){
+    console.log(this.props.location);
+  }
+
   render() {
     if (this.props.logged_in) {
       return (
@@ -60,4 +64,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

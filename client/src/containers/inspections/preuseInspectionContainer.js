@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import ElementList from '../elementList';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+// import ElementList from '../elementList';
 
 class PreuseInspectionContainer extends Component {
   render() {

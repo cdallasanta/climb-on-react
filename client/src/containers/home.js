@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import "../stylesheets/global.scss";
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { Switch, Route} from 'react-router-dom';
 import Dashboard from './dashboard';
 import PreuseInspectionContainer from './inspections/preuseInspectionContainer';
 import PeriodicInspectionContainer from './inspections/periodicInspectionContainer';
@@ -14,20 +14,17 @@ class Home extends Component {
         <Header />
 
         <div id="content">
-            
-          <Router>
-            <Switch>
-              <Route exact path="/preuse_inspections"
-                component={PreuseInspectionContainer}
-              />
-              <Route exact path="/periodic_inspections"
-                component={PeriodicInspectionContainer}
-              />
-              <Route exact path="/"
-                component={Dashboard}
-              />
-            </Switch>
-          </Router>
+          <Switch>
+            <Route exact path="/preuse_inspections"
+              component={PreuseInspectionContainer}
+            />
+            <Route exact path="/periodic_inspections"
+              component={PeriodicInspectionContainer}
+            />
+            <Route exact path="/"
+              component={Dashboard}
+            />
+          </Switch>
         </div>
       </div>
     );

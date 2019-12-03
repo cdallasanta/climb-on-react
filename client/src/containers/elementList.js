@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import "../stylesheets/elements.scss";
 import ElementCard from '../components/elementCard';
-import axios from 'axios';
+// import axios from 'axios';
 
 class ElementList extends Component {
   state = {
