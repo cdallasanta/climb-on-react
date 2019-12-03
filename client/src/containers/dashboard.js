@@ -15,7 +15,7 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => {
   return {
-    currentUser: state.user
+    currentUser: state.user.currentUser
   }
 }
 

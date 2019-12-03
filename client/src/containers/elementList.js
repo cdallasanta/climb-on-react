@@ -2,18 +2,18 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import "../stylesheets/elements.scss";
 import ElementCard from '../components/elementCard';
-// import axios from 'axios';
+import axios from 'axios';
 
 class ElementList extends Component {
   state = {
     elements: []
   }
 
-  // componentDidMount(){
-  //   axios.get(`http://localhost:3001/api/v1/sites/${this.props.currentUser.site_id}/elements`)
-  //   .then(response => this.setState({elements: response.data}))
-  //   .catch(error => console.log(error))
-  // }
+  componentDidMount(){
+    axios.get(`http://localhost:3001/api/v1/sites/${this.props.currentUser.site_id}/elements`)
+    .then(response => this.setState({elements: response.data}))
+    .catch(error => console.log(error))
+  }
 
   renderElements= () => {
     return this.state.elements.map(elem => {
@@ -24,8 +24,7 @@ class ElementList extends Component {
   render() {
     return (
       <div className="elements" id="elements-list">
-        {/* {this.renderElements()} */}
-        elementList
+        {this.renderElements()}
       </div>
     )
   }
@@ -33,7 +32,7 @@ class ElementList extends Component {
 
 const mapStateToProps = state => {
   return {
-    currentUser: state.user
+    currentUser: state.user.currentUser
   }
 }
 

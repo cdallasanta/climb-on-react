@@ -33,7 +33,7 @@ class App extends Component {
   }
 
   render() {
-    if (this.props.logged_in) {
+    if (this.props.loggedIn) {
       return (
         <Home handleLogout={this.handleLogout} />
       );
@@ -47,8 +47,8 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    logged_in: state.logged_in,
-    current_user: state.user
+    loggedIn: state.user.loggedIn,
+    currentUser: state.user.currentUser
   }
 }
 

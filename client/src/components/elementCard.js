@@ -2,7 +2,6 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 const ElementCard = ({data: {name, id}, location}) => {
-  debugger;
   return (
     <Link to={location.pathname + `/new?elementId=${id}`} style={{textDecoration: 'none'}}>
       <div className="element-card">

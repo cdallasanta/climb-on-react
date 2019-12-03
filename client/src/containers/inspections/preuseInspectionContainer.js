@@ -1,12 +1,18 @@
 import React, {Component} from 'react';
-// import ElementList from '../elementList';
+import { Switch, Route } from 'react-router-dom';
+import ElementList from '../elementList';
 
 class PreuseInspectionContainer extends Component {
   render() {
     return (
-      <div>
-        Preuse Inspections
-      </div>
+      <Switch>
+        <Route exact path="/preuse_inspections"
+          component={ElementList}
+        />
+        <Route exact path="/preuse_inspections/new"
+          component={null}
+        />
+      </Switch>
     )
   }
 }

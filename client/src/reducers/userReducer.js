@@ -1,19 +1,19 @@
 const initState = {
-  logged_in: false,
-  user: {}
+  loggedIn: false,
+  currentUser: {}
 };
 
-export default function userReducer(state = initState, action){
+export default function UserReducer(state = initState, action){
   switch (action.type){
     case "LOGIN":
       return {
-        logged_in: true,
-        user: action.payload
+        loggedIn: true,
+        currentUser: action.payload
       }
     case "LOGOUT":
       return {
-        logged_in: false,
-        user: {}
+        loggedIn: false,
+        currentUser: {}
       }
     default:
       return state
