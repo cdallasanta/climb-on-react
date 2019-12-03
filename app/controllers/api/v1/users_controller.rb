@@ -1,6 +1,6 @@
-module Api::V1
+module API::V1
   class UsersController < ApplicationController
-    before_action :check_owner_of_user, only: [:show, :edit, :update]
+    # before_action :check_owner_of_user, only: [:show, :edit, :update]
 
     def index
       @users = User.all
@@ -19,9 +19,7 @@ module Api::V1
     def show
       @user = User.find(params[:id])
       if @user
-        render json: {
-          user: @user
-        }
+        render json: @user
       else
         render json: {
           status: 500,

@@ -90,12 +90,14 @@ class Login extends Component {
               value={password}
               onChange={this.handleChange} />
 
-            <input
-              type="checkbox"
-              name="remember"
-              checked={remember}
-              onChange={this.handleChange} />
-            <label htmlFor="remember">Remember Me</label>
+            <div>
+              <input
+                type="checkbox"
+                name="remember"
+                checked={remember}
+                onChange={this.handleChange} />
+              <label htmlFor="remember">Remember Me</label>
+            </div>
 
             <button placeholder="submit" type="submit">
               Log In
