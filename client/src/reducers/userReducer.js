@@ -6,7 +6,6 @@ const initState = {
 export default function userReducer(state = initState, action){
   switch (action.type){
     case "LOGIN":
-      console.log(action.payload);
       return {
         logged_in: true,
         user: action.payload
