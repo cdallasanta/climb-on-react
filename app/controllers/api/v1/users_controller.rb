@@ -1,4 +1,4 @@
-module API::V1
+module Api::V1
   class UsersController < ApplicationController
     # before_action :check_owner_of_user, only: [:show, :edit, :update]
 

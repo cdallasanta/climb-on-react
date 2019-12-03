@@ -8,10 +8,10 @@ import Login from './containers/sessions/login';
 class App extends Component {
 
   handleLogin = (data, remember = true) => {
-    this.props.login(data.user);
+    this.props.login(data);
 
     if(remember){
-      localStorage.setItem("currentUser", JSON.stringify(data.user));
+      localStorage.setItem("currentUser", JSON.stringify(data));
     }
   }
 
@@ -45,7 +45,6 @@ class App extends Component {
     }
   }
 }
-
 
 const mapStateToProps = state => {
   return {
