@@ -6,7 +6,6 @@ import Home from './containers/home';
 import Login from './containers/sessions/login';
 
 class App extends Component {
-
   handleLogin = (data, remember = true) => {
     this.props.login(data);
 
@@ -31,10 +30,6 @@ class App extends Component {
 
   componentDidMount() {
     this.loginStatus();
-  }
-
-  componentDidUpdate(){
-    console.log(this.props.location);
   }
 
   render() {

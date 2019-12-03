@@ -11,7 +11,7 @@ class Home extends Component {
   render(){
     return (
       <div className="App">
-        <Header />
+        <Header handleLogout={this.props.handleLogout} />
 
         <div id="content">
           <Switch>
