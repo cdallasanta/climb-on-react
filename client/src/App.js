@@ -1,23 +1,14 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import "./stylesheets/global.scss";
-import { withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Home from './containers/home';
 import Login from './containers/sessions/login';
 
 class App extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      isLoggedIn: false,
-      currentUser: {}
-    }
-  }
 
   handleLogin = (data, remember = true) => {
-    this.setState({
-      isLoggedIn: true,
-      currentUser: data.user
-    });
+    this.props.login(data.user);
 
     if(remember){
       localStorage.setItem("currentUser", JSON.stringify(data.user));
@@ -25,20 +16,14 @@ class App extends Component {
   }
 
   handleLogout = () => {
-    this.setState({
-      isLoggedIn: false,
-      user: {}
-    });
+    this.props.logout();
     localStorage.removeItem("currentUser");
     this.props.history.push('/');
   }
 
   loginStatus = () => {
     if (localStorage.getItem("currentUser") !== null){
-      this.handleLogin({
-        loggedIn: true,
-        user: JSON.parse(localStorage.getItem("currentUser"))
-      });
+      this.props.login(JSON.parse(localStorage.getItem("currentUser")));
     } else {
       this.handleLogout();
     }
@@ -49,16 +34,31 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.isLoggedIn) {
+    if (this.props.logged_in) {
       return (
-          <Home {...this.props} currentUser={this.state.currentUser} handleLogout={this.handleLogout} />
+        <Home {...this.props} handleLogout={this.handleLogout} />
       );
     } else {
       return (
-          <Login {...this.props} handleLogin={this.handleLogin} />
+        <Login {...this.props} handleLogin={this.handleLogin} />
       );
     }
   }
 }
 
-export default withRouter(App);
+
+const mapStateToProps = state => {
+  return {
+    logged_in: state.logged_in,
+    current_user: state.user
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    login: (user) => dispatch({type:"LOGIN", payload:user}),
+    logout: () => dispatch({type:"LOGOUT"})
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));

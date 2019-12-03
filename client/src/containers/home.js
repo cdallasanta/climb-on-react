@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import "../stylesheets/global.scss";
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Dashboard from './dashboard';
@@ -33,4 +34,10 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapStateToProps = state => {
+  return {
+    currentUser: state.user
+  }
+}
+
+export default connect(mapStateToProps)(Home);
