@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [:show, :edit, :update]
 
-      resources :sites, only: [] do
+      resources :sites, only: [:show] do
 
         resources :elements, only: [:index, :show, :edit, :update] do
           # resources :ropes, only: [:new, :create, :update]
