@@ -22,13 +22,13 @@ class Home extends Component {
 
         <div id="content">
           <Switch>
-            <Route exact path="/preuse_inspections"
+            <Route path="/preuse_inspections"
               component={PreuseInspectionContainer}
             />
-            <Route exact path="/periodic_inspections"
+            <Route path="/periodic_inspections"
               component={PeriodicInspectionContainer}
             />
-            <Route exact path="/"
+            <Route path="/"
               component={Dashboard}
             />
           </Switch>

@@ -1,9 +1,9 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 
 const ElementCard = ({data: {name, id}, location}) => {
   return (
-    <Link to={location.pathname + `/new?elementId=${id}`} style={{textDecoration: 'none'}}>
+    <Link to={location.pathname + `/elements/${id}/new`} style={{textDecoration: 'none'}}>
       <div className="element-card">
         <h1>{name}</h1>
         
@@ -13,4 +13,4 @@ const ElementCard = ({data: {name, id}, location}) => {
   )
 }
 
-export default ElementCard;
+export default withRouter(ElementCard);

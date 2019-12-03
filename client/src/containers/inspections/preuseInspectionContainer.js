@@ -9,7 +9,7 @@ class PreuseInspectionContainer extends Component {
         <Route exact path="/preuse_inspections"
           component={ElementList}
         />
-        <Route exact path="/preuse_inspections/new"
+        <Route path="/preuse_inspections/new"
           component={null}
         />
       </Switch>
