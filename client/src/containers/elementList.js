@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import "../stylesheets/elements.scss";
-import Element from '../components/elementCard';
+import ElementCard from '../components/elementCard';
 import axios from 'axios';
 
 class ElementList extends Component {
@@ -8,30 +9,32 @@ class ElementList extends Component {
     elements: []
   }
 
-  componentDidMount(){
-    debugger;
-    axios.get('http://localhost:3001/api/v1/elements', {
-      params: {
-        user_id: this.props.currentUser.id
-      }
-    })
-    .then(response => this.setState({elements: response.data}))
-    .catch(error => console.log(error))
-  }
+  // componentDidMount(){
+  //   axios.get(`http://localhost:3001/api/v1/sites/${this.props.currentUser.site_id}/elements`)
+  //   .then(response => this.setState({elements: response.data}))
+  //   .catch(error => console.log(error))
+  // }
 
   renderElements= () => {
     return this.state.elements.map(elem => {
-      return <Element data={elem} key={elem.id} location={this.props.location} />;
+      return <ElementCard data={elem} key={elem.id} location={this.props.location} />;
     });
   }
 
   render() {
     return (
       <div className="elements" id="elements-list">
-        {this.renderElements()}
+        {/* {this.renderElements()} */}
+        elementList
       </div>
     )
   }
 }
 
-export default ElementList;
+const mapStateToProps = state => {
+  return {
+    currentUser: state.user
+  }
+}
+
+export default connect(mapStateToProps)(ElementList);

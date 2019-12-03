@@ -1,4 +1,3 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :fullname, :email
-  belongs_to :site
+  attributes :id, :fullname, :email, :site_id
 end

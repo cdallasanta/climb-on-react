@@ -36,11 +36,11 @@ class App extends Component {
   render() {
     if (this.props.logged_in) {
       return (
-        <Home {...this.props} handleLogout={this.handleLogout} />
+        <Home handleLogout={this.handleLogout} />
       );
     } else {
       return (
-        <Login {...this.props} handleLogin={this.handleLogin} />
+        <Login handleLogin={this.handleLogin} />
       );
     }
   }

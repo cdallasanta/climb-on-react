@@ -6,14 +6,9 @@ class PeriodicInspectionContainer extends Component {
 
   render() {
     return (
-      <Router>
-        <Switch>
-          <Route path="/periodic_inspections/new" render={props =>(
-                <ElementList {...props} />)} />
-          <Route exact path="/periodic_inspections" render={props =>(
-                <ElementList {...props} />)} />
-        </Switch>
-      </Router>
+      <div>
+        Periodic Inspections
+      </div>
     )
   }
 }

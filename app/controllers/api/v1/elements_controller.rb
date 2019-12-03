@@ -3,8 +3,7 @@ module Api::V1
     before_action :set_list, only: [:show, :update, :destroy]
   
     def index
-      @elements = Element.order(:id)
-  
+      @elements = Element.where(site_id: params[:site_id])
       render json: @elements
     end
   
