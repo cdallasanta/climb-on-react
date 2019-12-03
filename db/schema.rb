@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_16_222204) do
+ActiveRecord::Schema.define(version: 2019_12_03_211432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,14 @@ ActiveRecord::Schema.define(version: 2019_08_16_222204) do
     t.boolean "retired"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "sections", force: :cascade do |t|
+    t.string "title"
+    t.string "instructions"
+    t.string "inspection_type"
+    t.bigint "inspection_id"
+    t.index ["inspection_type", "inspection_id"], name: "index_sections_on_inspection_type_and_inspection_id"
   end
 
   create_table "setups", force: :cascade do |t|
