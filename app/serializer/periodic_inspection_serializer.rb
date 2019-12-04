@@ -1,6 +1,7 @@
 class PeriodicInspectionSerializer < ActiveModel::Serializer
   attributes :id, :date
   has_many :sections
+  has_many :users
   belongs_to :element
 
   def element
