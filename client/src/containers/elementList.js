@@ -22,7 +22,7 @@ class ElementList extends Component {
 
 const mapStateToProps = state => {
   return {
-    currentUser: state.user.currentUser,
+    currentUser: state.currentUser,
     elements: state.site.elements
   }
 }

@@ -40,7 +40,7 @@ class Home extends Component {
 
 const mapStateToProps = state => {
   return {
-    currentUser: state.user.currentUser
+    currentUser: state.currentUser
   }
 }
 
