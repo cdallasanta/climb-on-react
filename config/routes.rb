@@ -5,15 +5,14 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [:show, :edit, :update]
 
-      resources :sites, only: [:show] do
+      resources :sites, only: [:show]
 
-        resources :elements, only: [:index, :show, :edit, :update] do
-          # resources :ropes, only: [:new, :create, :update]
-          # resources :preuse_inspections, only: [:new,  :create, :edit, :update]
-          # get '/preuse_inspections/date/:date', to: "preuse_inspections#find_by_date"
-          # resources :periodic_inspections, only: [:new, :create, :show, :edit, :update]
-          # get '/periodic_inspections/date/:date', to: "periodic_inspections#find_by_date"
-        end
+      resources :elements, only: [:index, :show, :edit, :update] do
+        # resources :ropes, only: [:new, :create, :update]
+        # resources :preuse_inspections, only: [:new,  :create, :edit, :update]
+        # get '/preuse_inspections/date/:date', to: "preuse_inspections#find_by_date"
+        resources :periodic_inspections, only: [:new, :create, :show, :edit, :update]
+        get '/periodic_inspections/date/:date', to: "periodic_inspections#find_by_date"
       end
     end
   end

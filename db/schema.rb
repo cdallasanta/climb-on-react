@@ -51,9 +51,6 @@ ActiveRecord::Schema.define(version: 2019_12_03_211432) do
   end
 
   create_table "periodic_inspections", force: :cascade do |t|
-    t.boolean "equipment_complete"
-    t.boolean "element_complete"
-    t.boolean "environment_complete"
     t.integer "element_id"
     t.date "date"
     t.datetime "created_at", null: false
@@ -77,16 +74,13 @@ ActiveRecord::Schema.define(version: 2019_12_03_211432) do
 
   create_table "sections", force: :cascade do |t|
     t.string "title"
-    t.string "instructions"
+    t.boolean "complete"
     t.string "inspection_type"
     t.bigint "inspection_id"
     t.index ["inspection_type", "inspection_id"], name: "index_sections_on_inspection_type_and_inspection_id"
   end
 
   create_table "setups", force: :cascade do |t|
-    t.boolean "equipment_complete"
-    t.boolean "element_complete"
-    t.boolean "environment_complete"
     t.integer "preuse_inspection_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
@@ -99,9 +93,6 @@ ActiveRecord::Schema.define(version: 2019_12_03_211432) do
   end
 
   create_table "takedowns", force: :cascade do |t|
-    t.boolean "equipment_complete"
-    t.boolean "element_complete"
-    t.boolean "environment_complete"
     t.integer "preuse_inspection_id"
     t.integer "user_id"
     t.datetime "created_at", null: false

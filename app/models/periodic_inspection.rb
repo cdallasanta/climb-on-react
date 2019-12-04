@@ -8,7 +8,15 @@ class PeriodicInspection < ApplicationRecord
   validates :date, presence: true, uniqueness: {scope: :element}
   validates_presence_of :element
 
-  def self.find_or_init_past_inspection(date, element_id)
-    self.find_or_initialize_by(date: Date.strptime(date, "%Y-%m-%d"), element_id: element_id)
+  after_initialize :set_defaults
+
+  def set_defaults
+    self.sections << Section.new(title: "Element")
+    self.sections << Section.new(title: "Equipment")
+    self.sections << Section.new(title: "Environment")
+  end
+
+  def self.find_or_init_past_inspection(args)
+    self.find_or_initialize_by(args)
   end
 end

@@ -1,55 +1,79 @@
-import {React, Component} from 'react';
+import React, {Component} from 'react';
 import '../../stylesheets/periodic_inspections.scss';
+import axios from 'axios';
+import Section from './section';
 
-class PeriodicForm extends Component  {
-  state = {}
+class PeriodicForm extends Component {
+  state = {
+    date: new Date(),
+    element: {},
+    id: null,
+    sections: [
+      {complete: false},
+      {complete: false},
+      {complete: false}
+    ]
+  }
 
-  render(){
-    return(
+  handleToggle = ({target: {name, checked}}) => {
+    this.setState(state => {
+      const sections = state.sections.map((item, i) => {
+        if (i == name) {
+          return {...item, complete: checked};
+        } else {
+          return item;
+        }
+      });
+
+      return {sections,};
+    });
+  }
+
+  dateChange = event => {
+    const elemId = this.props.match.params.element_id;
+    axios.get(`http://localhost:3001/api/v1/elements/${elemId}/periodic_inspections/date/${event.target.value}`)
+    .then(resp =>{
+      this.setState(resp.data);
+    })
+  }
+
+  componentDidMount(){
+    const elemId = this.props.match.params.element_id;
+    const date = this.state.date
+    axios.get(`http://localhost:3001/api/v1/elements/${elemId}/periodic_inspections/date/${date}`)
+      .then(resp =>{
+        this.setState(resp.data);
+      })
+  }
+
+  render() {
+    return (
       <div id="periodic-inspection-form">
         <form>
-          {/* <%= errors_check(inspection) %> */}
           <div className="form-group">
             <label htmlFor="date">Date</label>
-            <input type="date" name="date" className="form-control-sm" required />
-          </div>
-          <div class="form-group">
-          <h2>Equipment</h2>
-            <div class="instructions-text">
-              {/* <%= @element.periodic_equipment_instructions %> */}
-            </div>
-            <div class="form-check">
-              {/* <%= f.check_box :equipment_complete, class:"form-check-input" %>
-              <%= f.label "Section completed?", class: "form-check-label" %> */}
-            </div>
-          </div>
-          {/* <div class="form-group">
-            <h2>Element</h2>
-            <div class="instructions-text"><%= @element.periodic_element_instructions %></div>
-            <div class="form-check">
-              <%= f.check_box :element_complete, class:"form-check-input" %>
-              <%= f.label "Section completed?", class: "form-check-label" %>
-            </div>
-          </div>
-          <div class="form-group">
-            <h2>Environment</h2>
-            <div class="instructions-text"><%= @element.periodic_environment_instructions %></div>
-            <div class="form-check">
-              <%= f.check_box :environment_complete, class:"form-check-input" %>
-              <%= f.label "Section completed?", class: "form-check-label" %>
-            </div>
+            <input type="date" name="date" className="form-control-sm" value={this.state.date} onChange={this.dateChange} required />
           </div>
 
-          <div class="form-group instructions-text">
-            <%= render partial: 'comments', locals: {f:f, inspection:@inspection} %>
-          </div>
+          <Section handleToggle={this.handleToggle.bind(this)}
+            checked={this.state.sections[0].complete}
+            instructions={this.state.element.element_instructions}
+            title="Element"
+            index="0" />
+          <Section handleToggle={this.handleToggle.bind(this)}
+            checked={this.state.sections[1].complete}
+            instructions={this.state.element.equipment_instructions}
+            title="Equipment"
+            index="1" />
+          <Section handleToggle={this.handleToggle.bind(this)}
+            checked={this.state.sections[2].complete}
+            instructions={this.state.element.environment_instructions}
+            title="Environment"
+            index="2" />
 
-          <%= updated_by_div(@inspection) %>
-
-          <%= f.submit %> */}
+          <input type="submit" onClick={this.handleSubmit} />
         </form>
       </div>
-
     )
   }
 }
