@@ -15,7 +15,8 @@ class PeriodicForm extends Component {
       {comments_attributes:[{content:"", user_id: this.props.currentUser.id}]},
       {comments_attributes:[{content:"", user_id: this.props.currentUser.id}]},
       {comments_attributes:[{content:"", user_id: this.props.currentUser.id}]}
-    ]
+    ],
+    alert_message: []
   }
 
   resetTextboxes = () => {
@@ -128,6 +129,7 @@ class PeriodicForm extends Component {
           if(resp.status === 200){
             this.setState(resp.data);
             this.resetTextboxes();
+            this.setState({alert_message: [{type:"success", message:"Inspection successfully logged"}]});
           } else {
             this.handleErrors(resp.errors);
           }
@@ -139,6 +141,7 @@ class PeriodicForm extends Component {
           if(resp.status === 200){
             this.setState(resp.data);
             this.resetTextboxes();
+            this.setState({alert_message: [{type:"success", message:"Inspection successfully logged"}]});
             this.props.history.push(`/periodic_inspections/elements/${elemId}/edit`);
           } else {
             this.handleErrors(resp.errors);
@@ -147,44 +150,64 @@ class PeriodicForm extends Component {
     }
   }
 
+  renderAlert = () => {
+    if (this.state.alert_message.length > 0) {
+      const alert = this.state.alert_message[0];
+      return (
+        <div className={`alert alert-${alert.type}`}>
+          <ul>
+            <li>{alert.message}</li>
+          </ul>
+        </div>
+      )
+    }
+  }
+
+  renderSections = () => {
+    if (this.state.sections.length > 0) {
+      return <>
+        <Section toggleCheckbox={this.toggleCheckbox.bind(this)}
+          handleChange={this.handleCommentChange}
+          instructions={this.state.element.element_instructions}
+          data={this.state.sections.find(s => s.title === "Element")}
+          index="0"
+          newComment={this.state.sections_attributes[0].comments_attributes[0].content} />
+        <Section toggleCheckbox={this.toggleCheckbox.bind(this)}
+          handleChange={this.handleCommentChange}
+          instructions={this.state.element.equipment_instructions}
+          data={this.state.sections.find(s => s.title === "Equipment")}
+          index="1"
+          newComment={this.state.sections_attributes[1].comments_attributes[0].content} />
+        <Section toggleCheckbox={this.toggleCheckbox.bind(this)}
+          handleChange={this.handleCommentChange}
+          instructions={this.state.element.environment_instructions}
+          data={this.state.sections.find(s => s.title === "Environment")}
+          index="2"
+          newComment={this.state.sections_attributes[2].comments_attributes[0].content} />
+      </>
+    }
+  }
+
   render() {
     return (
-      <div id="periodic-inspection-form">
-        <form onSubmit={this.handleSubmit.bind(this)} >
-          <div className="form-group">
-            <label htmlFor="date">Date</label>
-            <input type="date" name="date" className="form-control-sm" value={this.state.date} onChange={this.dateChange} required />
-          </div>
+      <>
+        {this.renderAlert()}
 
-        {this.state.sections.length > 0 ?
-          <>
-          <Section toggleCheckbox={this.toggleCheckbox.bind(this)}
-            handleChange={this.handleCommentChange}
-            instructions={this.state.element.element_instructions}
-            data={this.state.sections.find(s => s.title === "Element")}
-            index="0"
-            newComment={this.state.sections_attributes[0].comments_attributes[0].content} />
-          <Section toggleCheckbox={this.toggleCheckbox.bind(this)}
-            handleChange={this.handleCommentChange}
-            instructions={this.state.element.equipment_instructions}
-            data={this.state.sections.find(s => s.title === "Equipment")}
-            index="1"
-            newComment={this.state.sections_attributes[1].comments_attributes[0].content} />
-          <Section toggleCheckbox={this.toggleCheckbox.bind(this)}
-            handleChange={this.handleCommentChange}
-            instructions={this.state.element.environment_instructions}
-            data={this.state.sections.find(s => s.title === "Environment")}
-            index="2"
-            newComment={this.state.sections_attributes[2].comments_attributes[0].content} />
-          </>
-          : null}
+        <div id="periodic-inspection-form">
+          <form onSubmit={this.handleSubmit.bind(this)} >
+            <div className="form-group">
+              <label htmlFor="date">Date</label>
+              <input type="date" name="date" className="form-control-sm" value={this.state.date} onChange={this.dateChange} required />
+            </div>
 
-          <input type="submit" />
+            {this.renderSections()}
 
+            <input type="submit" />
 
-          {this.updatedBy()}
-        </form>
-      </div>
+            {this.updatedBy()}
+          </form>
+        </div>
+      </>
     )
   }
 }

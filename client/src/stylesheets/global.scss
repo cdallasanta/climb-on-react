@@ -6,14 +6,17 @@ body {
 div#content {
   position: relative;
   top: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 // alert boxes
 .alert {
-  width: 80%;
+  width: 90%;
   margin-top: 20px;
-  margin-right: 10%;
-  margin-left: 10%;
+  margin-right: 5%;
+  margin-left: 5%;
   border-radius: 10px;
 
   ul {
