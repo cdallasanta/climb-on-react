@@ -16,6 +16,7 @@ module Api::V1
     end
 
     def create
+      binding.pry
       @inspection = PeriodicInspection.new(element_id: params[:element_id])
       current_user = User.find(params["user_id"])
 
@@ -50,7 +51,12 @@ module Api::V1
         :sections_attributes => [
           :id,
           :title,
-          :complete
+          :complete,
+          :comments_attributes => [
+            :user_id,
+            :id,
+            :content
+          ]
         ]
       )
     end

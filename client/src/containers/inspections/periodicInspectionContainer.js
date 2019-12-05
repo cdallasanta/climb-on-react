@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Switch, Route } from 'react-router-dom';
 import ElementList from '../elementList';
-import PeriodicForm from '../../components/inspections/periodicForm';
+import PeriodicForm from './periodicForm';
 
 class PeriodicInspectionContainer extends Component {
   render() {

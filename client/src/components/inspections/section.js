@@ -1,6 +1,22 @@
 import React from 'react';
 
-const Section = ({title, instructions, checked, handleToggle, index}) => {
+const Section = ({data: {title, complete, comments}, newComment, instructions, toggleCheckbox, handleChange, index}) => {
+
+  function renderComments() {
+    return (
+      <div className="comments">
+        {comments.map((comment, i) =>{
+          return (
+            <div className="instructions-text" key={i}>
+              <strong>{comment.user.fullname}: </strong>{comment.content}
+            </div>
+          )
+        })}
+        <input type="textarea" name={index} value={newComment} onChange={handleChange} />
+      </div>
+    )
+  }
+
   return(
     <div className="form-group">
       <h2>{title}</h2>
@@ -8,9 +24,11 @@ const Section = ({title, instructions, checked, handleToggle, index}) => {
         {instructions}
       </div>
       <div className="form-check">
-        <input type="checkbox" checked={checked} onChange={handleToggle} name={index} />
+        <input type="checkbox" checked={complete} onChange={toggleCheckbox} name={index} />
         <label htmlFor={index} >Section Completed?</label>
       </div>
+
+      {renderComments()}
     </div>
   )
 }
