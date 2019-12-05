@@ -37,7 +37,13 @@ div#content {
 }
 
 .alert-warning {
-  border: 3px solid darkorange;
-  background: rgba(210, 180, 140, .8);
-  color: darkorange;
+  border: 3px solid SaddleBrown;
+  background: rgba(252, 248, 227, .8);
+  color: SaddleBrown;
+}
+
+.alert-info {
+  border: 3px solid DarkBlue;
+  background: rgba(100, 149, 237, .8) ;
+  color: DarkBlue;
 }

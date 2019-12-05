@@ -32,7 +32,7 @@ class PeriodicForm extends Component {
   toggleCheckbox = ({target: {name, checked}}) => {
     this.setState(state => {
       const sections = state.sections.map((item, i) => {
-        if (i === parseInt(name)) {
+        if (item.title === name) {
           return {...item, complete: checked};
         } else {
           return item;
@@ -63,8 +63,10 @@ class PeriodicForm extends Component {
     .then(resp =>{
       if (resp.data.id !== null){
         this.props.history.push(`/periodic_inspections/elements/${elemId}/edit`);
+        this.setState({alert_message: [{type:"info", message:"Previous inspection loaded"}]});
       } else {
         this.props.history.push(`/periodic_inspections/elements/${elemId}/new`);
+        this.setState({alert_message: []});
       }
       this.setState(resp.data);
       this.resetTextboxes();
@@ -78,8 +80,10 @@ class PeriodicForm extends Component {
       .then(resp =>{
         if (resp.data.id !== null){
           this.props.history.push(`/periodic_inspections/elements/${elemId}/edit`);
+          this.setState({alert_message: [{type:"info", message:"Previous inspection loaded"}]});
         } else {
           this.props.history.push(`/periodic_inspections/elements/${elemId}/new`);
+          this.setState({alert_message: []});
         }
         this.setState(resp.data);
         this.resetTextboxes();
@@ -105,9 +109,7 @@ class PeriodicForm extends Component {
     console.log(errors);
   }
 
-  handleSubmit = event => {
-    event.preventDefault();
-    const elemId = this.state.element.id;
+  gatherDataFromState = () => {
     const data = {
       id: this.state.id,
       date: this.state.date,
@@ -121,6 +123,14 @@ class PeriodicForm extends Component {
         comments_attributes: [this.state.sections_attributes[i].comments_attributes[0]]
       })
     });
+
+    return data;
+  }
+
+  handleSubmit = event => {
+    event.preventDefault();
+    const elemId = this.state.element.id;
+    const data = this.gatherDataFromState();
 
     if (this.state.id){
       const url = `http://localhost:3001/api/v1/elements/${elemId}/periodic_inspections/${this.state.id}/edit`;
