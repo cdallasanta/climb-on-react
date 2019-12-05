@@ -10,6 +10,9 @@ class PeriodicInspectionContainer extends Component {
         <Route path="/periodic_inspections/elements/:element_id/new"
           component={PeriodicForm}
         />
+        <Route path="/periodic_inspections/elements/:element_id/edit"
+          component={PeriodicForm}
+        />
         <Route path="/periodic_inspections"
           component={ElementList}
         />

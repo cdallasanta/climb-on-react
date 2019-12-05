@@ -35,6 +35,11 @@ class PeriodicForm extends Component {
     const elemId = this.props.match.params.element_id;
     axios.get(`http://localhost:3001/api/v1/elements/${elemId}/periodic_inspections/date/${event.target.value}`)
     .then(resp =>{
+      if (resp.data.id !== null){
+        this.props.history.push(`/periodic_inspections/elements/${elemId}/edit`);
+      } else {
+        this.props.history.push(`/periodic_inspections/elements/${elemId}/new`);
+      }
       this.setState(resp.data);
     })
   }
@@ -44,6 +49,11 @@ class PeriodicForm extends Component {
     const date = this.state.date
     axios.get(`http://localhost:3001/api/v1/elements/${elemId}/periodic_inspections/date/${date}`)
       .then(resp =>{
+        if (resp.data.id !== null){
+          this.props.history.push(`/periodic_inspections/elements/${elemId}/edit`);
+        } else {
+          this.props.history.push(`/periodic_inspections/elements/${elemId}/new`);
+        }
         this.setState(resp.data);
       })
   }
@@ -84,6 +94,7 @@ class PeriodicForm extends Component {
         .then(resp => {
           if(resp.status === 200){
             this.setState(resp.data);
+            this.props.history.push(`/periodic_inspections/elements/${elemId}/edit`);
           } else {
             this.handleErrors(resp.errors);
           }

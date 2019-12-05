@@ -23,7 +23,7 @@ class Login extends Component {
     });
   }
 
-  handleSubmit = event =>{
+  handleSubmit = event => {
     event.preventDefault();
     
     const {email, password, remember} = this.state;
@@ -34,17 +34,16 @@ class Login extends Component {
 
     axios.post('http://localhost:3001/login', {user}, {withCredentials: false})
       .then(resp => {
-        if (resp.status === 200){
-          this.props.handleLogin(resp.data, remember);
-          this.redirect();
-        } else {
-          this.state({
+        if (resp.data.status === 401){
+          this.setState({
             email: "",
             password: "",
-            errors: "",
-            remember: false
+            remember: false,
+            errors: resp.data.errors
           });
-          this.setState({errors: resp.data.errors});
+        } else {
+          this.props.handleLogin(resp.data, remember);
+          this.redirect();
         }
       })
       .catch(error => console.log('api error:', error));
