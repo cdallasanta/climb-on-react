@@ -7,13 +7,12 @@ module Api::V1
         date: Date.parse(params[:date]),
         element_id: params[:element_id]
       )
-      binding.pry
 
-      # if @insp.id == nil
-      #   @insp.sections.new(title: "Element")
-      #   @insp.sections.new(title: "Equipment")
-      #   @insp.sections.new(title: "Environment")
-      # end
+      if @insp.id == nil
+        @insp.setup = PreuseInspection::Setup.create
+      else
+        @insp.takedown = PreuseInspection::Takedown.create unless @insp.takedown
+      end
 
       render json: @insp
     end

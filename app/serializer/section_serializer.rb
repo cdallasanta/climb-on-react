@@ -1,7 +1,7 @@
 class SectionSerializer < ActiveModel::Serializer
-  attributes :id, :complete, :title, :comments
+  attributes :id, :complete, :title, :comments_attributes
 
-  def comments
+  def comments_attributes
     comments = []
     object.comments.each do |comment|
       if comment.id

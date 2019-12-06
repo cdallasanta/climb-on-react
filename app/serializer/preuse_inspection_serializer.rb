@@ -1,6 +1,7 @@
-class PeriodicInspectionSerializer < ActiveModel::Serializer
-  attributes :id, :date, :sections_attributes
-  has_many :users
+class PreuseInspectionSerializer < ActiveModel::Serializer
+  attributes :date
+  has_one :setup
+  has_one :takedown
   belongs_to :element
 
   def element
@@ -11,9 +12,5 @@ class PeriodicInspectionSerializer < ActiveModel::Serializer
       equipment_instructions: object.element.periodic_equipment_instructions,
       environment_instructions: object.element.periodic_environment_instructions
     }
-  end
-
-  def sections_attributes
-    ActiveModel::SerializableResource.new(object.sections,  each_serializer: SectionSerializer)
   end
 end

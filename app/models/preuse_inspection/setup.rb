@@ -7,8 +7,16 @@ class PreuseInspection::Setup < ApplicationRecord
   has_one :element, through: :preuse_inspection
   accepts_nested_attributes_for :sections
 
+  after_initialize :create_sections
+
   # only allows the creation of a takedown once each step of the setup is completed
   def is_complete?
     !self.attributes.any?{|attr, val| val == false}
+  end
+
+  def create_sections
+    self.sections.new(title: "Element")
+    self.sections.new(title: "Equipment")
+    self.sections.new(title: "Environment")
   end
 end

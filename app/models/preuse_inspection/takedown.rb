@@ -11,4 +11,11 @@ class PreuseInspection::Takedown < ApplicationRecord
   accepts_nested_attributes_for :ropes
   accepts_nested_attributes_for :climbs
 
+  after_initialize :create_sections
+  
+  def create_sections
+    self.sections.new(title: "Element")
+    self.sections.new(title: "Equipment")
+    self.sections.new(title: "Environment")
+  end
 end

@@ -5,8 +5,8 @@ import axios from 'axios';
 import Section from '../../components/inspections/section';
 
 class PreuseForm extends Component {
-  // state = {
-  //   date: new Date(),
+  state = {
+    date: new Date(),
   //   element: {},
   //   id: null,
   //   sections: [],
@@ -16,8 +16,8 @@ class PreuseForm extends Component {
   //     {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Equipment"}]},
   //     {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Environment"}]}
   //   ],
-  //   alert_message: []
-  // }
+    alert_message: []
+  }
 
   // resetTextboxes = () => {
   //   this.setState({
@@ -57,25 +57,25 @@ class PreuseForm extends Component {
   //   });
   // }
 
-  // checkDateForInspection = date => {
-  //   const elemId = this.props.match.params.element_id;
-  //   axios.get(`http://localhost:3001/api/v1/elements/${elemId}/periodic_inspections/date/${date}`)
-  //   .then(resp =>{
-  //     if (resp.data.id !== null){
-  //       this.props.history.push(`/periodic_inspections/elements/${elemId}/edit`);
-  //       this.setState({alert_message: [{type:"info", message:"Previous inspection loaded"}]});
-  //     } else {
-  //       this.props.history.push(`/periodic_inspections/elements/${elemId}/new`);
-  //       this.setState({alert_message: []});
-  //     }
-  //     this.setState(resp.data);
-  //     this.resetTextboxes();
-  //   })
-  // }
+  checkDateForInspection = date => {
+    const elemId = this.props.match.params.element_id;
+    axios.get(`http://localhost:3001/api/v1/elements/${elemId}/preuse_inspections/date/${date}`)
+    .then(resp =>{
+      if (resp.data.id !== null){
+        this.props.history.push(`/preuse_inspections/elements/${elemId}/edit`);
+        this.setState({alert_message: [{type:"info", message:"Previous inspection loaded"}]});
+      } else {
+        this.props.history.push(`/preuse_inspections/elements/${elemId}/new`);
+        this.setState({alert_message: []});
+      }
+      this.setState(resp.data);
+      this.resetTextboxes();
+    })
+  }
 
-  // componentDidMount(){
-  //   this.checkDateForInspection(this.state.date);
-  // }
+  componentDidMount(){
+    this.checkDateForInspection(this.state.date);
+  }
 
   // renderUpdatedBy = () => {
   //   if (this.state.users.length > 0) {
@@ -118,8 +118,8 @@ class PreuseForm extends Component {
   //   return data;
   // }
 
-  // handleSubmit = event => {
-  //   event.preventDefault();
+  handleSubmit = event => {
+    event.preventDefault();
   //   const elemId = this.state.element.id;
   //   const data = this.gatherDataFromState();
 
@@ -149,20 +149,20 @@ class PreuseForm extends Component {
   //         }
   //       })
   //   }
-  // }
+  }
 
-  // renderAlert = () => {
-  //   if (this.state.alert_message.length > 0) {
-  //     const alert = this.state.alert_message[0];
-  //     return (
-  //       <div className={`alert alert-${alert.type}`}>
-  //         <ul>
-  //           <li>{alert.message}</li>
-  //         </ul>
-  //       </div>
-  //     )
-  //   }
-  // }
+  renderAlert = () => {
+    if (this.state.alert_message.length > 0) {
+      const alert = this.state.alert_message[0];
+      return (
+        <div className={`alert alert-${alert.type}`}>
+          <ul>
+            <li>{alert.message}</li>
+          </ul>
+        </div>
+      )
+    }
+  }
 
   // renderSections = () => {
   //   if (this.state.sections.length > 0) {
@@ -192,7 +192,7 @@ class PreuseForm extends Component {
   render() {
     return (
       <>
-        {/* {this.renderAlert()}
+        {this.renderAlert()}
 
         <div id="periodic-inspection-form">
           <form onSubmit={this.handleSubmit.bind(this)} >
@@ -200,14 +200,14 @@ class PreuseForm extends Component {
               <label htmlFor="date">Date</label>
               <input type="date" name="date" className="form-control-sm" value={this.state.date} onChange={event => this.checkDateForInspection(event.target.value)} required />
             </div>
-
+{/*}
             {this.renderSections()}
 
             <input type="submit" />
 
-            {this.renderUpdatedBy()}
+            {this.renderUpdatedBy()} */}
           </form>
-        </div> */}
+        </div>
       </>
     )
   }
