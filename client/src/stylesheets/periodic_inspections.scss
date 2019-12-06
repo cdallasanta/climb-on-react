@@ -1,5 +1,5 @@
 body.periodic_inspections {
-  background: #685E1B;
+  background-color: #685E1B;
   background-image: url('../images/HappyCreek.JPG');
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -8,7 +8,7 @@ body.periodic_inspections {
 }
 
 #periodic-inspection-form {
-  background: rgba(221, 229, 114, .7);
+  background-color: rgba(221, 229, 114, .7);
   width: 90%;
   margin-top: 10px;
   margin-right: 5%;
@@ -17,7 +17,7 @@ body.periodic_inspections {
   border: 5px solid #242700;
 
   .form-group {
-    background: #F7FCBA;
+    background-color: #F7FCBA;
     margin: 10px;
     padding: 10px;
     border-radius: 10px;

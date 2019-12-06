@@ -1,16 +1,17 @@
-body {
+#logged-out-content {
   background-color: #141F04;
   background-image: url('../images/DevilsJunction.JPG');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
+  width: 100%;
+  height: 100%;
 }
 
 /* Form */
 #login-form-div {
-  background:rgb(20,31,4);
-  background:rgba(20,31,4,0.8);
+  background-color:rgba(20,31,4,0.8);
   border: 10px solid rgb(13,13,13);
   color: #fff;
   top: 10vh;

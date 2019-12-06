@@ -43,14 +43,10 @@ class Login extends Component {
           });
         } else {
           this.props.handleLogin(resp.data, remember);
-          this.redirect();
+          this.props.history.push('/');
         }
-      })
+      }) //TODO figure out what I want to so with server errors
       .catch(error => console.log('api error:', error));
-  }
-
-  redirect = () => {
-    this.props.history.push('/');
   }
 
   handleErrors = () => {
@@ -69,7 +65,7 @@ class Login extends Component {
     const {email, password, remember} = this.state;
 
     return(
-      <div className="content">
+      <div className="content" id="logged-out-content">
         {this.state.errors ? this.handleErrors() : null}
 
         <div id="login-form-div">

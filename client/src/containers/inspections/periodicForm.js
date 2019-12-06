@@ -54,7 +54,7 @@ class PeriodicForm extends Component {
         }
       });
       return {...state, sections_attributes: sections};
-    }, () => console.log(this.state));
+    });
   }
 
   checkDateForInspection = date => {
@@ -104,7 +104,6 @@ class PeriodicForm extends Component {
       sections_attributes: [],
       current_user: this.props.currentUser
     }
-console.log(this.state);
 
     this.state.sections.forEach(section =>{
       const matchedSection = this.state.sections_attributes.find(s => {

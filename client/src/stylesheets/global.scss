@@ -1,9 +1,17 @@
+html, body, #root, div.App, div.content {
+  height: 100%;
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0px;
 }
 
-div#content {
+div.content{
+  background-color: rgb(30, 56, 30);
+}
+
+div#body {
   position: relative;
   top: 10vh;
   display: flex;
@@ -26,24 +34,24 @@ div#content {
 
 .alert-success {
   border: 3px solid darkgreen;
-  background: rgba(144, 238, 144, .8);
+  background-color: rgba(144, 238, 144, .8);
   color: darkgreen;
 }
 
 .alert-danger {
   border: 3px solid darkred;
-  background: rgba(255, 127, 80, .8);
+  background-color: rgba(255, 127, 80, .8);
   color: darkred;
 }
 
 .alert-warning {
   border: 3px solid SaddleBrown;
-  background: rgba(252, 248, 227, .8);
+  background-color: rgba(252, 248, 227, .8);
   color: SaddleBrown;
 }
 
 .alert-info {
   border: 3px solid DarkBlue;
-  background: rgba(100, 149, 237, .8) ;
+  background-color: rgba(100, 149, 237, .8) ;
   color: DarkBlue;
 }

@@ -17,10 +17,10 @@ class Home extends Component {
 
   render(){
     return (
-      <div className="App">
+      <div className="content" id="logged-in-content">
         <Header handleLogout={this.props.handleLogout} />
 
-        <div id="content">
+        <div id="body">
           <Switch>
             <Route path="/preuse_inspections"
               component={PreuseInspectionContainer}
