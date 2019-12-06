@@ -16,7 +16,6 @@ class PreuseInspection < ApplicationRecord
   def create_takedown(current_user)
     self.takedown ||= PreuseInspection::Takedown.create
 
-    self.takedown.comments.build(user:current_user)
     if self.takedown.climbs == []
       self.takedown.ropes.each do |rope|
         self.takedown.climbs.create(rope:rope)

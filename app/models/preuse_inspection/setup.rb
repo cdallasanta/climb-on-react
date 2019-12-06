@@ -9,11 +9,6 @@ class PreuseInspection::Setup < ApplicationRecord
 
   after_initialize :create_sections
 
-  # only allows the creation of a takedown once each step of the setup is completed
-  def is_complete?
-    !self.attributes.any?{|attr, val| val == false}
-  end
-
   def create_sections
     self.sections.new(title: "Element")
     self.sections.new(title: "Equipment")

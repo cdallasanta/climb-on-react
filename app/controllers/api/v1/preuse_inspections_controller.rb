@@ -7,17 +7,21 @@ module Api::V1
         date: Date.parse(params[:date]),
         element_id: params[:element_id]
       )
-
+      
       if @insp.id == nil
         @insp.setup = PreuseInspection::Setup.create
       else
         @insp.takedown = PreuseInspection::Takedown.create unless @insp.takedown
+        @insp.element.ropes.each do |rope|
+          @insp.takedown.climbs.new(rope: rope)
+        end
       end
 
       render json: @insp
     end
 
     def create
+      binding.pry
       @inspection = PreuseInspection.new(element_id: params[:element_id])
 
       return save_and_return(@inspection)
