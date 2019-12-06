@@ -12,9 +12,9 @@ class PeriodicForm extends Component {
     sections: [],
     users: [],
     sections_attributes:[
-      {comments_attributes:[{content:"", user_id: this.props.currentUser.id}]},
-      {comments_attributes:[{content:"", user_id: this.props.currentUser.id}]},
-      {comments_attributes:[{content:"", user_id: this.props.currentUser.id}]}
+      {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Element"}]},
+      {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Equipment"}]},
+      {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Environment"}]}
     ],
     alert_message: []
   }
@@ -22,9 +22,9 @@ class PeriodicForm extends Component {
   resetTextboxes = () => {
     this.setState({
       sections_attributes:[
-        {comments_attributes:[{content:"", user_id: this.props.currentUser.id}]},
-        {comments_attributes:[{content:"", user_id: this.props.currentUser.id}]},
-        {comments_attributes:[{content:"", user_id: this.props.currentUser.id}]}
+        {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Element"}]},
+        {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Equipment"}]},
+        {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Environment"}]}
       ]
     });
   }
@@ -46,15 +46,15 @@ class PeriodicForm extends Component {
   handleCommentChange = event =>{
     const {name, value} = event.target;
     this.setState(state => {
-      const sections = state.sections_attributes.map((item, i) => {
-        if (i === parseInt(name)) {
-          return {...item, comments_attributes: [{content: value, user_id:this.props.currentUser.id}]};
+      const sections = state.sections_attributes.map(item => {
+        if (item.comments_attributes[0].title === name) {
+          return {...item, comments_attributes: [{content: value, user_id:this.props.currentUser.id, title: name}]};
         } else {
           return item;
         }
       });
       return {...state, sections_attributes: sections};
-    });
+    }, () => console.log(this.state));
   }
 
   checkDateForInspection = date => {
@@ -104,11 +104,15 @@ class PeriodicForm extends Component {
       sections_attributes: [],
       current_user: this.props.currentUser
     }
+console.log(this.state);
 
-    this.state.sections.forEach((section, i) =>{
+    this.state.sections.forEach(section =>{
+      const matchedSection = this.state.sections_attributes.find(s => {
+        return s.comments_attributes[0].title === section.title
+      })
       data.sections_attributes.push({
         ...section,
-        comments_attributes: [this.state.sections_attributes[i].comments_attributes[0]]
+        comments_attributes: [matchedSection.comments_attributes[0]]
       })
     });
 
