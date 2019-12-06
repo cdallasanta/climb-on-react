@@ -1,5 +1,15 @@
+html {
+  position: fixed;
+  overflow: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
 html, body, #root, div.App, div.content {
   height: 100%;
+  overflow: auto;
 }
 
 body {
@@ -7,13 +17,18 @@ body {
   margin: 0px;
 }
 
-div.content{
-  background-color: rgb(30, 56, 30);
+#logged-in-content {
+  background-color: rgb(42, 56, 22);
+  background-image: none;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
 }
 
 div#body {
   position: relative;
-  top: 10vh;
+  margin: 10vh auto;
   display: flex;
   flex-direction: column;
   justify-content: center;

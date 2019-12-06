@@ -14,7 +14,7 @@ class PeriodicInspectionContainer extends Component {
           component={PeriodicForm}
         />
         <Route path="/periodic_inspections"
-          component={ElementList}
+          component={ElementList} title="Periodic Inspections"
         />
       </Switch>
     )
