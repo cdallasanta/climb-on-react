@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Section = ({data: {id, title, complete, comments}, newComment, instructions, toggleCheckbox, handleChange, index}) => {
+const Section = ({data: {id, title, complete, comments}, newComment, instructions, handleCheckboxToggle, handleChange, index}) => {
 
   function renderComments() {
     return (
@@ -24,7 +24,7 @@ const Section = ({data: {id, title, complete, comments}, newComment, instruction
         {instructions}
       </div>
       <div className="form-check">
-        <input type="checkbox" checked={complete} onChange={toggleCheckbox} name={title} />
+        <input type="checkbox" checked={complete} onChange={handleCheckboxToggle} name={title} />
         <label htmlFor={title} >Section Completed?</label>
       </div>
 

@@ -29,7 +29,7 @@ class PeriodicForm extends Component {
     });
   }
 
-  toggleCheckbox = ({target: {name, checked}}) => {
+  handleCheckboxToggle = ({target: {name, checked}}) => {
     this.setState(state => {
       const sections = state.sections.map((item, i) => {
         if (item.title === name) {
@@ -57,9 +57,9 @@ class PeriodicForm extends Component {
     });
   }
 
-  dateChange = event => {
+  checkDateForInspection = date => {
     const elemId = this.props.match.params.element_id;
-    axios.get(`http://localhost:3001/api/v1/elements/${elemId}/periodic_inspections/date/${event.target.value}`)
+    axios.get(`http://localhost:3001/api/v1/elements/${elemId}/periodic_inspections/date/${date}`)
     .then(resp =>{
       if (resp.data.id !== null){
         this.props.history.push(`/periodic_inspections/elements/${elemId}/edit`);
@@ -74,23 +74,10 @@ class PeriodicForm extends Component {
   }
 
   componentDidMount(){
-    const elemId = this.props.match.params.element_id;
-    const date = this.state.date
-    axios.get(`http://localhost:3001/api/v1/elements/${elemId}/periodic_inspections/date/${date}`)
-      .then(resp =>{
-        if (resp.data.id !== null){
-          this.props.history.push(`/periodic_inspections/elements/${elemId}/edit`);
-          this.setState({alert_message: [{type:"info", message:"Previous inspection loaded"}]});
-        } else {
-          this.props.history.push(`/periodic_inspections/elements/${elemId}/new`);
-          this.setState({alert_message: []});
-        }
-        this.setState(resp.data);
-        this.resetTextboxes();
-      })
+    this.checkDateForInspection(this.state.date);
   }
 
-  updatedBy = () => {
+  renderUpdatedBy = () => {
     if (this.state.users.length > 0) {
       return (
         <div className="updated-by form-group">
@@ -105,6 +92,7 @@ class PeriodicForm extends Component {
     }
   }
 
+  // TODO figure out how I want to handle server errors
   handleErrors = errors => {
     console.log(errors);
   }
@@ -133,13 +121,13 @@ class PeriodicForm extends Component {
     const data = this.gatherDataFromState();
 
     if (this.state.id){
-      const url = `http://localhost:3001/api/v1/elements/${elemId}/periodic_inspections/${this.state.id}/edit`;
+      const url = `http://localhost:3001/api/v1/elements/${elemId}/periodic_inspections/${this.state.id}`;
       axios.patch(url,{periodic_inspection: data, user_id: this.props.currentUser.id})
         .then(resp => {
           if(resp.status === 200){
             this.setState(resp.data);
             this.resetTextboxes();
-            this.setState({alert_message: [{type:"success", message:"Inspection successfully logged"}]});
+            this.setState({alert_message: [{type:"success", message:"Inspection successfully updated"}]});
           } else {
             this.handleErrors(resp.errors);
           }
@@ -176,19 +164,19 @@ class PeriodicForm extends Component {
   renderSections = () => {
     if (this.state.sections.length > 0) {
       return <>
-        <Section toggleCheckbox={this.toggleCheckbox.bind(this)}
+        <Section handleCheckboxToggle={this.handleCheckboxToggle.bind(this)}
           handleChange={this.handleCommentChange}
           instructions={this.state.element.element_instructions}
           data={this.state.sections.find(s => s.title === "Element")}
           index="0"
           newComment={this.state.sections_attributes[0].comments_attributes[0].content} />
-        <Section toggleCheckbox={this.toggleCheckbox.bind(this)}
+        <Section handleCheckboxToggle={this.handleCheckboxToggle.bind(this)}
           handleChange={this.handleCommentChange}
           instructions={this.state.element.equipment_instructions}
           data={this.state.sections.find(s => s.title === "Equipment")}
           index="1"
           newComment={this.state.sections_attributes[1].comments_attributes[0].content} />
-        <Section toggleCheckbox={this.toggleCheckbox.bind(this)}
+        <Section handleCheckboxToggle={this.handleCheckboxToggle.bind(this)}
           handleChange={this.handleCommentChange}
           instructions={this.state.element.environment_instructions}
           data={this.state.sections.find(s => s.title === "Environment")}
@@ -207,14 +195,14 @@ class PeriodicForm extends Component {
           <form onSubmit={this.handleSubmit.bind(this)} >
             <div className="form-group">
               <label htmlFor="date">Date</label>
-              <input type="date" name="date" className="form-control-sm" value={this.state.date} onChange={this.dateChange} required />
+              <input type="date" name="date" className="form-control-sm" value={this.state.date} onChange={event => this.checkDateForInspection(event.target.value)} required />
             </div>
 
             {this.renderSections()}
 
             <input type="submit" />
 
-            {this.updatedBy()}
+            {this.renderUpdatedBy()}
           </form>
         </div>
       </>

@@ -11,7 +11,7 @@ Rails.application.routes.draw do
         # resources :ropes, only: [:new, :create, :update]
         # resources :preuse_inspections, only: [:new,  :create, :edit, :update]
         # get '/preuse_inspections/date/:date', to: "preuse_inspections#find_by_date"
-        resources :periodic_inspections, only: [:new, :create, :show, :edit, :update]
+        resources :periodic_inspections, only: [:create, :update]
         get '/periodic_inspections/date/:date', to: "periodic_inspections#find_by_date"
       end
     end
