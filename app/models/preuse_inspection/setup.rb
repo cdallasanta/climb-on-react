@@ -10,8 +10,14 @@ class PreuseInspection::Setup < ApplicationRecord
   after_initialize :create_sections
 
   def create_sections
-    self.sections.new(title: "Element")
-    self.sections.new(title: "Equipment")
-    self.sections.new(title: "Environment")
+    if self.sections.length != 3
+      self.sections.new(title: "element")
+      self.sections.new(title: "equipment")
+      self.sections.new(title: "environment")
+    end
+  end
+
+  def is_complete?
+    !self.sections.any?{|s| s.complete == false}
   end
 end

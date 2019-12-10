@@ -2,60 +2,60 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import '../../stylesheets/preuse_inspections.scss';
 import axios from 'axios';
-import Section from '../../components/inspections/section';
+import Setup from '../../components/inspections/setup';
+import Takedown from '../../components/inspections/takedown';
 
 class PreuseForm extends Component {
   state = {
     date: new Date(),
-  //   element: {},
-  //   id: null,
-  //   sections: [],
-  //   users: [],
-  //   sections_attributes:[
-  //     {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Element"}]},
-  //     {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Equipment"}]},
-  //     {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Environment"}]}
-  //   ],
+    element: {},
+    id: null,
+    newComments: {
+      setup:{
+        equipment: {content: ""},
+        element: {content: ""},
+        environment: {content: ""}
+      },
+      takedown:{
+        equipment: {content: ""},
+        element: {content: ""},
+        environment: {content: ""}
+      }
+    },
     alert_message: []
   }
 
-  // resetTextboxes = () => {
+  resetTextboxes = () => {
   //   this.setState({
   //     sections_attributes:[
-  //       {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Element"}]},
-  //       {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Equipment"}]},
-  //       {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Environment"}]}
+  //       {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"element"}]},
+  //       {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"equipment"}]},
+  //       {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"environment"}]}
   //     ]
   //   });
-  // }
+  }
 
-  // handleCheckboxToggle = ({target: {name, checked}}) => {
-  //   this.setState(state => {
-  //     const sections = state.sections.map((item, i) => {
-  //       if (item.title === name) {
-  //         return {...item, complete: checked};
-  //       } else {
-  //         return item;
-  //       }
-  //     });
+  handleCheckboxToggle = event => {
+    const {name, checked} = event.target;
+    const inspection = event.target.getAttribute("inspection");
 
-  //     return {sections};
-  //   });
-  // }
+    this.setState(state => {
+      const newAttrs = state[`${inspection}_attributes`];
+      newAttrs.sections_attributes.find(s => s.title === name).complete = checked;
+      return Object.assign({}, state, {[`${inspection}_attributes`]: newAttrs})
+    });
+  }
 
-  // handleCommentChange = event =>{
-  //   const {name, value} = event.target;
-  //   this.setState(state => {
-  //     const sections = state.sections_attributes.map(item => {
-  //       if (item.comments_attributes[0].title === name) {
-  //         return {...item, comments_attributes: [{content: value, user_id:this.props.currentUser.id, title: name}]};
-  //       } else {
-  //         return item;
-  //       }
-  //     });
-  //     return {...state, sections_attributes: sections};
-  //   });
-  // }
+  handleCommentChange = event =>{
+    const {name, value} = event.target;
+    const inspection = event.target.getAttribute("inspection");
+
+    this.setState(state => {
+      const newComments = state.newComments;
+      newComments[inspection][name].content = value;
+      return Object.assign({}, state, {newComments: newComments})
+    });
+  }
 
   checkDateForInspection = date => {
     const elemId = this.props.match.params.element_id;
@@ -77,78 +77,84 @@ class PreuseForm extends Component {
     this.checkDateForInspection(this.state.date);
   }
 
-  // renderUpdatedBy = () => {
-  //   if (this.state.users.length > 0) {
-  //     return (
-  //       <div className="updated-by form-group">
-  //         <h3>Updated by:</h3>
-  //         {this.state.users.map((user, i) => {
-  //           return <React.Fragment key={i}>
-  //             {user.fullname}<br/>
-  //           </React.Fragment>
-  //         })}
-  //       </div>
-  //     )
-  //   }
-  // }
+  renderUpdatedBy = () => {
+    if (this.data) {
+      return (
+        <div className="updated-by form-group">
+          <h3>Updated by:</h3>
+          {this.state.users.map((user, i) => {
+            return <React.Fragment key={i}>
+              {user.fullname}<br/>
+            </React.Fragment>
+          })}
+        </div>
+      )
+    }
+  }
 
   // // TODO figure out how I want to handle server errors
   // handleErrors = errors => {
   //   console.log(errors);
   // }
 
-  // gatherDataFromState = () => {
-  //   const data = {
-  //     id: this.state.id,
-  //     date: this.state.date,
-  //     sections_attributes: [],
-  //     current_user: this.props.currentUser
-  //   }
+  gatherDataFromState = () => {
+    const data = {
+      id: this.state.id,
+      date: this.state.date,
+      setup_attributes: this.state.setup_attributes,
+      takedown_attributes: this.state.takedown_attributes,
+      current_user: this.props.currentUser
+    }
 
-  //   this.state.sections.forEach(section =>{
-  //     const matchedSection = this.state.sections_attributes.find(s => {
-  //       return s.comments_attributes[0].title === section.title
-  //     })
-  //     data.sections_attributes.push({
-  //       ...section,
-  //       comments_attributes: [matchedSection.comments_attributes[0]]
-  //     })
-  //   });
+    for(const insp in this.state.newComments){
+      for(const section_title in this.state.newComments[insp]){
+        if (data[`${insp}_attributes`]){
+          const section = data[`${insp}_attributes`].sections_attributes.find(s => s.title === section_title);
 
-  //   return data;
-  // }
+          section.comments_attributes.push({
+            id: null,
+            content: this.state.newComments[insp][section_title].content,
+            user_id: data.current_user.id
+          })
+        }
+      }
+    }
+
+    return data;
+  }
 
   handleSubmit = event => {
     event.preventDefault();
-  //   const elemId = this.state.element.id;
-  //   const data = this.gatherDataFromState();
+    const elemId = this.state.element.id;
+    const data = this.gatherDataFromState();
 
-  //   if (this.state.id){
-  //     const url = `http://localhost:3001/api/v1/elements/${elemId}/periodic_inspections/${this.state.id}`;
-  //     axios.patch(url,{periodic_inspection: data, user_id: this.props.currentUser.id})
-  //       .then(resp => {
-  //         if(resp.status === 200){
-  //           this.setState(resp.data);
-  //           this.resetTextboxes();
-  //           this.setState({alert_message: [{type:"success", message:"Inspection successfully updated"}]});
-  //         } else {
-  //           this.handleErrors(resp.errors);
-  //         }
-  //       })
-  //   } else {
-  //     const url = `http://localhost:3001/api/v1/elements/${elemId}/periodic_inspections/`;
-  //     axios.post(url,{periodic_inspection: data, user_id: this.props.currentUser.id})
-  //       .then(resp => {
-  //         if(resp.status === 200){
-  //           this.setState(resp.data);
-  //           this.resetTextboxes();
-  //           this.setState({alert_message: [{type:"success", message:"Inspection successfully logged"}]});
-  //           this.props.history.push(`/periodic_inspections/elements/${elemId}/edit`);
-  //         } else {
-  //           this.handleErrors(resp.errors);
-  //         }
-  //       })
-  //   }
+    if (this.state.id){
+      const url = `http://localhost:3001/api/v1/elements/${elemId}/preuse_inspections/${this.state.id}`;
+      axios.patch(url,{preuse_inspection: data, user_id: this.props.currentUser.id})
+        .then(resp => {
+          if(resp.status === 200){
+            this.setState(resp.data);
+            this.resetTextboxes();
+            this.setState({alert_message: [{type:"success", message:"Inspection successfully updated"}]});
+          } else {
+            this.handleErrors(resp.errors);
+          }
+        })
+    } else {
+      const url = `http://localhost:3001/api/v1/elements/${elemId}/preuse_inspections/`;
+      axios.post(url,{preuse_inspection: data, user_id: this.props.currentUser.id})
+        .then(resp => {
+          debugger;
+          if(resp.status === 200){
+            this.setState(resp.data);
+            this.resetTextboxes();
+            this.setState({alert_message: [{type:"success", message:"Inspection successfully logged"}]});
+            this.props.history.push(`/preuse_inspections/elements/${elemId}/edit`);
+          } else {
+            this.handleErrors(resp.errors);
+          }
+        })
+    }
   }
 
   renderAlert = () => {
@@ -164,31 +170,6 @@ class PreuseForm extends Component {
     }
   }
 
-  // renderSections = () => {
-  //   if (this.state.sections.length > 0) {
-  //     return <>
-  //       <Section handleCheckboxToggle={this.handleCheckboxToggle.bind(this)}
-  //         handleChange={this.handleCommentChange}
-  //         instructions={this.state.element.element_instructions}
-  //         data={this.state.sections.find(s => s.title === "Element")}
-  //         index="0"
-  //         newComment={this.state.sections_attributes[0].comments_attributes[0].content} />
-  //       <Section handleCheckboxToggle={this.handleCheckboxToggle.bind(this)}
-  //         handleChange={this.handleCommentChange}
-  //         instructions={this.state.element.equipment_instructions}
-  //         data={this.state.sections.find(s => s.title === "Equipment")}
-  //         index="1"
-  //         newComment={this.state.sections_attributes[1].comments_attributes[0].content} />
-  //       <Section handleCheckboxToggle={this.handleCheckboxToggle.bind(this)}
-  //         handleChange={this.handleCommentChange}
-  //         instructions={this.state.element.environment_instructions}
-  //         data={this.state.sections.find(s => s.title === "Environment")}
-  //         index="2"
-  //         newComment={this.state.sections_attributes[2].comments_attributes[0].content} />
-  //     </>
-  //   }
-  // }
-
   render() {
     return (
       <>
@@ -200,12 +181,27 @@ class PreuseForm extends Component {
               <label htmlFor="date">Date</label>
               <input type="date" name="date" className="form-control-sm" value={this.state.date} onChange={event => this.checkDateForInspection(event.target.value)} required />
             </div>
-{/*}
-            {this.renderSections()}
+
+            {this.state.setup_attributes ?
+              <Setup data={this.state.setup_attributes}
+                renderUpdatedBy={this.renderUpdatedBy}
+                handleCheckboxToggle={this.handleCheckboxToggle.bind(this)}
+                handleChange={this.handleCommentChange}
+                element={this.state.element}
+                newComments={this.state.newComments.setup}
+              /> : null}
+
+            {this.state.takedown_attributes ?
+              <Takedown data={this.state.takedown_attributes}
+                renderUpdatedBy={this.renderUpdatedBy}
+                handleCheckboxToggle={this.handleCheckboxToggle.bind(this)}
+                handleChange={this.handleCommentChange}
+                element={this.state.element}
+                newComments={this.state.newComments.takedown}
+              /> : null}
 
             <input type="submit" />
 
-            {this.renderUpdatedBy()} */}
           </form>
         </div>
       </>

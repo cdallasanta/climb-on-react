@@ -12,10 +12,19 @@ class PreuseInspection::Takedown < ApplicationRecord
   accepts_nested_attributes_for :climbs
 
   after_initialize :create_sections
+  after_create :create_climbs
   
   def create_sections
-    self.sections.new(title: "Element")
-    self.sections.new(title: "Equipment")
-    self.sections.new(title: "Environment")
+    if self.sections.length != 3
+      self.sections.new(title: "element")
+      self.sections.new(title: "equipment")
+      self.sections.new(title: "environment")
+    end
+  end
+
+  def create_climbs
+    self.ropes.each do |rope|
+      self.climbs.create(rope: rope)
+    end
   end
 end

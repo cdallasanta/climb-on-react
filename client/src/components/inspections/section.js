@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Section = ({data: {id, title, complete, comments}, newComment, instructions, handleCheckboxToggle, handleChange, index}) => {
+const Section = ({data: {id, title, complete, comments_attributes}, newComment, instructions, handleCheckboxToggle, handleChange, inspection, index}) => {
 
   function renderComments() {
-    const sortedComments = comments.sort((a,b) => a.id - b.id)
+    const sortedComments = comments_attributes.sort((a,b) => a.id - b.id)
     return (
       <div className="comments">
         {sortedComments.map((comment, i) =>{
@@ -13,7 +13,7 @@ const Section = ({data: {id, title, complete, comments}, newComment, instruction
             </div>
           )
         })}
-        <input type="textarea" name={title} value={newComment} onChange={handleChange} />
+        <input type="textarea" name={title} value={newComment} onChange={handleChange} inspection={inspection} />
       </div>
     )
   }
@@ -25,7 +25,7 @@ const Section = ({data: {id, title, complete, comments}, newComment, instruction
         {instructions}
       </div>
       <div className="form-check">
-        <input type="checkbox" checked={complete} onChange={handleCheckboxToggle} name={title} />
+        <input type="checkbox" checked={complete} onChange={handleCheckboxToggle} name={title} inspection={inspection} />
         <label htmlFor={title} >Section Completed?</label>
       </div>
 

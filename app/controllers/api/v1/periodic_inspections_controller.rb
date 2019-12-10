@@ -3,16 +3,15 @@ module Api::V1
     before_action :remove_empty_comments, only: [:create, :update]
 
     def find_by_date
-      binding.pry
       @insp = PeriodicInspection.find_or_init_past_inspection(
         date: Date.parse(params[:date]),
         element_id: params[:element_id]
       )
 
       if @insp.id == nil
-        @insp.sections.new(title: "Element")
-        @insp.sections.new(title: "Equipment")
-        @insp.sections.new(title: "Environment")
+        @insp.sections.new(title: "element")
+        @insp.sections.new(title: "equipment")
+        @insp.sections.new(title: "environment")
       end
 
       render json: @insp

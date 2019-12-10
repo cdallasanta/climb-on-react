@@ -1,7 +1,5 @@
 class PreuseInspectionSerializer < ActiveModel::Serializer
-  attributes :date
-  has_one :setup
-  has_one :takedown
+  attributes :date, :id, :setup_attributes, :takedown_attributes
   belongs_to :element
 
   def element
@@ -12,5 +10,16 @@ class PreuseInspectionSerializer < ActiveModel::Serializer
       equipment_instructions: object.element.periodic_equipment_instructions,
       environment_instructions: object.element.periodic_environment_instructions
     }
+  end
+
+  
+  def setup_attributes
+    SetupSerializer.new(object.setup, root: false)
+  end
+
+  def takedown_attributes
+    if object.takedown
+      TakedownSerializer.new(object.takedown, root: false)
+    end
   end
 end

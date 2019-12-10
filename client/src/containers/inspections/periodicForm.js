@@ -12,9 +12,9 @@ class PeriodicForm extends Component {
     sections: [],
     users: [],
     sections_attributes:[
-      {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Element"}]},
-      {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Equipment"}]},
-      {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Environment"}]}
+      {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"element"}]},
+      {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"equipment"}]},
+      {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"environment"}]}
     ],
     alert_message: []
   }
@@ -22,16 +22,16 @@ class PeriodicForm extends Component {
   resetTextboxes = () => {
     this.setState({
       sections_attributes:[
-        {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Element"}]},
-        {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Equipment"}]},
-        {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Environment"}]}
+        {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"element"}]},
+        {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"equipment"}]},
+        {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"environment"}]}
       ]
     });
   }
 
   handleCheckboxToggle = ({target: {name, checked}}) => {
     this.setState(state => {
-      const sections = state.sections.map((item, i) => {
+      const sections = state.sections_attributes.map((item, i) => {
         if (item.title === name) {
           return {...item, complete: checked};
         } else {
@@ -105,7 +105,7 @@ class PeriodicForm extends Component {
       current_user: this.props.currentUser
     }
 
-    this.state.sections.forEach(section =>{
+    this.state.sections_attributes.forEach(section =>{
       const matchedSection = this.state.sections_attributes.find(s => {
         return s.comments_attributes[0].title === section.title
       })
@@ -165,24 +165,24 @@ class PeriodicForm extends Component {
   }
 
   renderSections = () => {
-    if (this.state.sections.length > 0) {
+    if (this.state.sections_attributes.length > 0) {
       return <>
         <Section handleCheckboxToggle={this.handleCheckboxToggle.bind(this)}
           handleChange={this.handleCommentChange}
           instructions={this.state.element.element_instructions}
-          data={this.state.sections.find(s => s.title === "Element")}
+          data={this.state.sections_attributes.find(s => s.title === "element")}
           index="0"
           newComment={this.state.sections_attributes[0].comments_attributes[0].content} />
         <Section handleCheckboxToggle={this.handleCheckboxToggle.bind(this)}
           handleChange={this.handleCommentChange}
           instructions={this.state.element.equipment_instructions}
-          data={this.state.sections.find(s => s.title === "Equipment")}
+          data={this.state.sections_attributes.find(s => s.title === "equipment")}
           index="1"
           newComment={this.state.sections_attributes[1].comments_attributes[0].content} />
         <Section handleCheckboxToggle={this.handleCheckboxToggle.bind(this)}
           handleChange={this.handleCommentChange}
           instructions={this.state.element.environment_instructions}
-          data={this.state.sections.find(s => s.title === "Environment")}
+          data={this.state.sections_attributes.find(s => s.title === "environment")}
           index="2"
           newComment={this.state.sections_attributes[2].comments_attributes[0].content} />
       </>
