@@ -12,9 +12,9 @@ class PeriodicForm extends Component {
     sections: [],
     users: [],
     sections_attributes:[
-      {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"element"}]},
-      {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"equipment"}]},
-      {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"environment"}]}
+      {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Element"}]},
+      {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Equipment"}]},
+      {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Environment"}]}
     ],
     alert_message: []
   }
@@ -22,9 +22,9 @@ class PeriodicForm extends Component {
   resetTextboxes = () => {
     this.setState({
       sections_attributes:[
-        {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"element"}]},
-        {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"equipment"}]},
-        {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"environment"}]}
+        {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Element"}]},
+        {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Equipment"}]},
+        {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"Environment"}]}
       ]
     });
   }
@@ -170,19 +170,19 @@ class PeriodicForm extends Component {
         <Section handleCheckboxToggle={this.handleCheckboxToggle.bind(this)}
           handleChange={this.handleCommentChange}
           instructions={this.state.element.element_instructions}
-          data={this.state.sections_attributes.find(s => s.title === "element")}
+          data={this.state.sections_attributes.find(s => s.title === "Element")}
           index="0"
           newComment={this.state.sections_attributes[0].comments_attributes[0].content} />
         <Section handleCheckboxToggle={this.handleCheckboxToggle.bind(this)}
           handleChange={this.handleCommentChange}
           instructions={this.state.element.equipment_instructions}
-          data={this.state.sections_attributes.find(s => s.title === "equipment")}
+          data={this.state.sections_attributes.find(s => s.title === "Equipment")}
           index="1"
           newComment={this.state.sections_attributes[1].comments_attributes[0].content} />
         <Section handleCheckboxToggle={this.handleCheckboxToggle.bind(this)}
           handleChange={this.handleCommentChange}
           instructions={this.state.element.environment_instructions}
-          data={this.state.sections_attributes.find(s => s.title === "environment")}
+          data={this.state.sections_attributes.find(s => s.title === "Environment")}
           index="2"
           newComment={this.state.sections_attributes[2].comments_attributes[0].content} />
       </>

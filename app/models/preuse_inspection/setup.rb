@@ -11,9 +11,9 @@ class PreuseInspection::Setup < ApplicationRecord
 
   def create_sections
     if self.sections.length != 3
-      self.sections.new(title: "element")
-      self.sections.new(title: "equipment")
-      self.sections.new(title: "environment")
+      self.sections.new(title: "Element")
+      self.sections.new(title: "Equipment")
+      self.sections.new(title: "Environment")
     end
   end
 

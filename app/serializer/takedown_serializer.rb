@@ -1,5 +1,6 @@
 class TakedownSerializer < ActiveModel::Serializer
-  attributes :sections_attributes, :ropes_attributes
+  attributes :id, :sections_attributes, :ropes_attributes
+  has_many :users
   
   def sections_attributes
     ActiveModel::SerializableResource.new(object.sections,  each_serializer: SectionSerializer)

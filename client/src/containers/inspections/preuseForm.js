@@ -12,27 +12,34 @@ class PreuseForm extends Component {
     id: null,
     newComments: {
       setup:{
-        equipment: {content: ""},
-        element: {content: ""},
-        environment: {content: ""}
+        Equipment: {content: ""},
+        Element: {content: ""},
+        Environment: {content: ""}
       },
       takedown:{
-        equipment: {content: ""},
-        element: {content: ""},
-        environment: {content: ""}
+        Equipment: {content: ""},
+        Element: {content: ""},
+        Environment: {content: ""}
       }
     },
     alert_message: []
   }
 
   resetTextboxes = () => {
-  //   this.setState({
-  //     sections_attributes:[
-  //       {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"element"}]},
-  //       {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"equipment"}]},
-  //       {comments_attributes:[{content:"", user_id: this.props.currentUser.id, title:"environment"}]}
-  //     ]
-  //   });
+    this.setState({
+      newComments: {
+        setup:{
+          Equipment: {content: ""},
+          Element: {content: ""},
+          Environment: {content: ""}
+        },
+        takedown:{
+          Equipment: {content: ""},
+          Element: {content: ""},
+          Environment: {content: ""}
+        }
+      }
+    });
   }
 
   handleCheckboxToggle = event => {
@@ -77,12 +84,13 @@ class PreuseForm extends Component {
     this.checkDateForInspection(this.state.date);
   }
 
-  renderUpdatedBy = () => {
-    if (this.data) {
+  // intentionally not using an arrow function so children will use the correct "this"
+  renderUpdatedBy(){
+    if (typeof(this.data) !== "undefined" && this.data.users.length > 0) {
       return (
         <div className="updated-by form-group">
           <h3>Updated by:</h3>
-          {this.state.users.map((user, i) => {
+          {this.data.users.map((user, i) => {
             return <React.Fragment key={i}>
               {user.fullname}<br/>
             </React.Fragment>
@@ -133,6 +141,7 @@ class PreuseForm extends Component {
       axios.patch(url,{preuse_inspection: data, user_id: this.props.currentUser.id})
         .then(resp => {
           if(resp.status === 200){
+            debugger;
             this.setState(resp.data);
             this.resetTextboxes();
             this.setState({alert_message: [{type:"success", message:"Inspection successfully updated"}]});
@@ -144,7 +153,6 @@ class PreuseForm extends Component {
       const url = `http://localhost:3001/api/v1/elements/${elemId}/preuse_inspections/`;
       axios.post(url,{preuse_inspection: data, user_id: this.props.currentUser.id})
         .then(resp => {
-          debugger;
           if(resp.status === 200){
             this.setState(resp.data);
             this.resetTextboxes();
@@ -192,13 +200,13 @@ class PreuseForm extends Component {
               /> : null}
 
             {this.state.takedown_attributes ?
-              <Takedown data={this.state.takedown_attributes}
+              <><hr /><Takedown data={this.state.takedown_attributes}
                 renderUpdatedBy={this.renderUpdatedBy}
                 handleCheckboxToggle={this.handleCheckboxToggle.bind(this)}
                 handleChange={this.handleCommentChange}
                 element={this.state.element}
                 newComments={this.state.newComments.takedown}
-              /> : null}
+              /></> : null}
 
             <input type="submit" />
 

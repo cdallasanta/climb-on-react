@@ -32,7 +32,17 @@ module Api::V1
     def save_and_return
       current_user = User.find(params["user_id"])
 
-      @insp.assign_attributes(preuse_params)
+      # assign attributes - needed to do this weird nesting thing since AR couldn't find
+      # the nested sections in the setup and takedown if they already existed
+      @insp.date = preuse_params[:date]
+      if @insp.setup
+        @insp.setup.assign_attributes(preuse_params[:setup_attributes])
+      else
+        @insp.assign_attributes(preuse_params)
+      end
+      if @insp.takedown
+        @insp.takedown.assign_attributes(preuse_params[:takedown_attributes])
+      end
 
       # add current user to setup and takedown's "updated by"
       if @insp.setup.changed_for_autosave?
@@ -45,7 +55,7 @@ module Api::V1
       # save and create takedown or return errors
       if @insp.changed_for_autosave?
         if @insp.save
-          if @insp.setup.is_complete?
+          if @insp.setup.is_complete? && !@insp.takedown
             @insp.takedown = PreuseInspection::Takedown.create()
           end
           render json: @insp
@@ -64,7 +74,8 @@ module Api::V1
       params.require(:preuse_inspection).permit(
         :id,
         :date,
-        setup_attributes: {
+        setup_attributes: [
+          :id,
           :sections_attributes => [
             :id,
             :title,
@@ -75,8 +86,9 @@ module Api::V1
               :content
             ]
           ]
-        },
-        takedown_attributes: {
+        ],
+        takedown_attributes: [
+          :id,
           :sections_attributes => [
             :id,
             :title,
@@ -87,7 +99,7 @@ module Api::V1
               :content
             ]
           ]
-        }
+        ]
       )
     end
     

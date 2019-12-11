@@ -9,9 +9,9 @@ module Api::V1
       )
 
       if @insp.id == nil
-        @insp.sections.new(title: "element")
-        @insp.sections.new(title: "equipment")
-        @insp.sections.new(title: "environment")
+        @insp.sections.new(title: "Element")
+        @insp.sections.new(title: "Equipment")
+        @insp.sections.new(title: "Environment")
       end
 
       render json: @insp
