@@ -42,26 +42,45 @@ class PreuseForm extends Component {
     });
   }
 
-  handleCheckboxToggle = event => {
-    const {name, checked} = event.target;
-    const inspection = event.target.getAttribute("inspection");
+  handleChange = event =>{
+    if (event.target.attributes.type.value === "phone"){
+      // changing climbs number from takedown
+      const {name, value} = event.target;
+      const ropeId = parseInt(event.target.getAttribute('rope-id'));
 
-    this.setState(state => {
-      const newAttrs = state[`${inspection}_attributes`];
-      newAttrs.sections_attributes.find(s => s.title === name).complete = checked;
-      return Object.assign({}, state, {[`${inspection}_attributes`]: newAttrs})
-    });
-  }
+      this.setState(state => {
+        const takedown_attributes = state.takedown_attributes;
+        const rope = takedown_attributes.ropes_attributes.find(r => r.id === ropeId);
 
-  handleCommentChange = event =>{
-    const {name, value} = event.target;
-    const inspection = event.target.getAttribute("inspection");
+        rope.climbs_attributes[0][name] = parseInt(value);
 
-    this.setState(state => {
-      const newComments = state.newComments;
-      newComments[inspection][name].content = value;
-      return Object.assign({}, state, {newComments: newComments})
-    });
+        return {
+          takedown_attributes
+        }
+      }, () => console.log(this.state))
+
+    } else if (event.target.attributes.type.value === "textarea") {
+      // changing comment
+      const {name, value} = event.target;
+      const inspection = event.target.getAttribute("inspection");
+
+      this.setState(state => {
+        const newComments = state.newComments;
+        newComments[inspection][name].content = value;
+        return Object.assign({}, state, {newComments: newComments})
+      });
+    } else if (event.target.attributes.type.value === "checkbox") {
+      //chaning checkbox
+      const {name, checked} = event.target;
+      const inspection = event.target.getAttribute("inspection");
+  
+      this.setState(state => {
+        const newAttrs = state[`${inspection}_attributes`];
+        newAttrs.sections_attributes.find(s => s.title === name).complete = checked;
+        return Object.assign({}, state, {[`${inspection}_attributes`]: newAttrs})
+      });
+    }
+
   }
 
   checkDateForInspection = date => {
@@ -193,8 +212,7 @@ class PreuseForm extends Component {
             {this.state.setup_attributes ?
               <Setup data={this.state.setup_attributes}
                 renderUpdatedBy={this.renderUpdatedBy}
-                handleCheckboxToggle={this.handleCheckboxToggle.bind(this)}
-                handleChange={this.handleCommentChange}
+                handleChange={this.handleChange}
                 element={this.state.element}
                 newComments={this.state.newComments.setup}
               /> : null}
@@ -202,8 +220,7 @@ class PreuseForm extends Component {
             {this.state.takedown_attributes ?
               <><hr /><Takedown data={this.state.takedown_attributes}
                 renderUpdatedBy={this.renderUpdatedBy}
-                handleCheckboxToggle={this.handleCheckboxToggle.bind(this)}
-                handleChange={this.handleCommentChange}
+                handleChange={this.handleChange}
                 element={this.state.element}
                 newComments={this.state.newComments.takedown}
               /></> : null}

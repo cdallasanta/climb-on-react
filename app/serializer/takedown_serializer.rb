@@ -7,12 +7,14 @@ class TakedownSerializer < ActiveModel::Serializer
   end
 
   def ropes_attributes
-    object.preuse_inspection.element.ropes.map do |rope|
-      return {
+    ropes = []
+    object.preuse_inspection.element.ropes.each do |rope|
+      ropes << {
         id: rope.id,
-        identifier: rope.id,
+        identifier: rope.identifier,
         climbs_attributes: rope.climbs.where(takedown_id: object.id)
       }
     end
+    return ropes
   end
 end
