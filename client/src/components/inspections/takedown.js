@@ -26,51 +26,53 @@ class Takedown extends Component {
   }
 
   renderClimbs = () => {
-    return <table className="climb-blocks form-group">
-      <thead><tr>
-        <th>Rope</th>
-        <th>Block 1</th>
-        <th>Block 2</th>
-        <th>Block 3</th>
-        <th>Block 4</th>
-      </tr></thead>
-      <tbody>
-        {this.props.data.ropes_attributes.map((rope, i) =>{
-        const climb = rope.climbs_attributes[0];
-        return <tr key ={i}>
-          <td>{rope.identifier}</td>
-          <td>
-            <input type="phone"
-            value={climb.block_1 ? climb.block_1 : ""}
-            name="block_1"
-            rope-id={rope.id}
-            onChange={this.props.handleChange} />
-          </td>
-          <td>
-            <input type="phone"
-            value={climb.block_2 ? climb.block_2 : ""}
-            name="block_2"
-            rope-id={rope.id}
-            onChange={this.props.handleChange} />
-          </td>
-          <td>
-            <input type="phone"
-            value={climb.block_3 ? climb.block_3 : ""}
-            name="block_3"
-            rope-id={rope.id}
-            onChange={this.props.handleChange} />
-          </td>
-          <td>
-            <input type="phone"
-            value={climb.block_4 ? climb.block_4 : ""}
-            name="block_4"
-            rope-id={rope.id}
-            onChange={this.props.handleChange} />
-          </td>
-        </tr>
-      })}
-      </tbody>
-    </table>
+    return <div className="climb-blocks form-group">
+      <table>
+        <thead><tr>
+          <th>Rope</th>
+          <th>Block 1</th>
+          <th>Block 2</th>
+          <th>Block 3</th>
+          <th>Block 4</th>
+        </tr></thead>
+        <tbody>
+          {this.props.data.ropes_attributes.map((rope, i) =>{
+          const climb = rope.climbs_attributes[0];
+          return <tr key ={i}>
+            <td>{rope.identifier}</td>
+            <td>
+              <input type="number"
+              value={climb.block_1 ? climb.block_1 : ""}
+              name="block_1"
+              rope-id={rope.id}
+              onChange={this.props.handleChange} />
+            </td>
+            <td>
+              <input type="number"
+              value={climb.block_2 ? climb.block_2 : ""}
+              name="block_2"
+              rope-id={rope.id}
+              onChange={this.props.handleChange} />
+            </td>
+            <td>
+              <input type="number"
+              value={climb.block_3 ? climb.block_3 : ""}
+              name="block_3"
+              rope-id={rope.id}
+              onChange={this.props.handleChange} />
+            </td>
+            <td>
+              <input type="number"
+              value={climb.block_4 ? climb.block_4 : ""}
+              name="block_4"
+              rope-id={rope.id}
+              onChange={this.props.handleChange} />
+            </td>
+          </tr>
+        })}
+        </tbody>
+      </table>
+    </div>
   }
 
   render(){

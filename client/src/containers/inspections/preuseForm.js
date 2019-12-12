@@ -43,7 +43,7 @@ class PreuseForm extends Component {
   }
 
   handleChange = event =>{
-    if (event.target.attributes.type.value === "phone"){
+    if (event.target.attributes.type.value === "number"){
       // changing climbs number from takedown
       const {name, value} = event.target;
       const ropeId = parseInt(event.target.getAttribute('rope-id'));
@@ -81,6 +81,8 @@ class PreuseForm extends Component {
       });
     }
 
+    document.getElementById('submit-button').disabled = false;
+    document.getElementById('submit-button').value = "Submit";
   }
 
   checkDateForInspection = date => {
@@ -97,6 +99,9 @@ class PreuseForm extends Component {
       this.setState(resp.data);
       this.resetTextboxes();
     })
+    
+    document.getElementById('submit-button').value = "No Changes Yet";
+    document.getElementById('submit-button').disabled = true;
   }
 
   componentDidMount(){
@@ -160,7 +165,6 @@ class PreuseForm extends Component {
       axios.patch(url,{preuse_inspection: data, user_id: this.props.currentUser.id})
         .then(resp => {
           if(resp.status === 200){
-            debugger;
             this.setState(resp.data);
             this.resetTextboxes();
             this.setState({alert_message: [{type:"success", message:"Inspection successfully updated"}]});
@@ -182,6 +186,9 @@ class PreuseForm extends Component {
           }
         })
     }
+    
+    document.getElementById('submit-button').value = "No Changes Yet";
+    document.getElementById('submit-button').disabled = true;
   }
 
   renderAlert = () => {
@@ -202,7 +209,7 @@ class PreuseForm extends Component {
       <>
         {this.renderAlert()}
 
-        <div id="periodic-inspection-form">
+        <div id="preuse-inspection-form">
           <form onSubmit={this.handleSubmit.bind(this)} >
             <div className="form-group">
               <label htmlFor="date">Date</label>
@@ -225,7 +232,7 @@ class PreuseForm extends Component {
                 newComments={this.state.newComments.takedown}
               /></> : null}
 
-            <input type="submit" />
+            <input type="submit" id="submit-button" />
 
           </form>
         </div>

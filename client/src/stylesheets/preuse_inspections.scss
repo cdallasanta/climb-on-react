@@ -22,6 +22,10 @@ body.preuse_inspections{
     border-radius: 10px;
   }
 
+  h1 {
+    margin-left: 10px;
+  }
+
   h2 {
     margin-bottom: 10px;
     margin-top: 5px;
@@ -45,6 +49,10 @@ body.preuse_inspections{
     padding: 2px;
   }
 
+  input[type=number] {
+    width: 30px;
+  }
+
   input[type=submit] {
     -moz-box-shadow: inset -3px -3px 10px #130C0D;
     -webkit-box-shadow: inset -3px -3px 10px #130C0D;
@@ -56,6 +64,10 @@ body.preuse_inspections{
     font-weight: bold;
     padding: 10px 30px;
     margin: 5px;
+  }
+  input[type=submit]:disabled {
+    background-color: #757473;
+    color: #4d4c4b;
   }
 
   input[type=date] {
