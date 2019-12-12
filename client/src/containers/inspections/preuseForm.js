@@ -87,7 +87,7 @@ class PreuseForm extends Component {
 
   checkDateForInspection = date => {
     const elemId = this.props.match.params.element_id;
-    axios.get(`http://localhost:3001/api/v1/elements/${elemId}/preuse_inspections/date/${date}`)
+    axios.get(`/api/v1/elements/${elemId}/preuse_inspections/date/${date}`)
     .then(resp =>{
       if (resp.data.id !== null){
         this.props.history.push(`/preuse_inspections/elements/${elemId}/edit`);
@@ -161,7 +161,7 @@ class PreuseForm extends Component {
     const data = this.gatherDataFromState();
 
     if (this.state.id){
-      const url = `http://localhost:3001/api/v1/elements/${elemId}/preuse_inspections/${this.state.id}`;
+      const url = `/api/v1/elements/${elemId}/preuse_inspections/${this.state.id}`;
       axios.patch(url,{preuse_inspection: data, user_id: this.props.currentUser.id})
         .then(resp => {
           if(resp.status === 200){
@@ -173,7 +173,7 @@ class PreuseForm extends Component {
           }
         })
     } else {
-      const url = `http://localhost:3001/api/v1/elements/${elemId}/preuse_inspections/`;
+      const url = `/api/v1/elements/${elemId}/preuse_inspections/`;
       axios.post(url,{preuse_inspection: data, user_id: this.props.currentUser.id})
         .then(resp => {
           if(resp.status === 200){

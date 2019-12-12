@@ -15,7 +15,7 @@ class Home extends Component {
   }
 
   componentDidMount(){
-    axios.get(`http://localhost:3001/api/v1/sites/${this.props.currentUser.site_id}`)
+    axios.get(`/api/v1/sites/${this.props.currentUser.site_id}`)
     .then(response => this.props.setSite(response.data))
     .catch(error => console.log(error))
   }

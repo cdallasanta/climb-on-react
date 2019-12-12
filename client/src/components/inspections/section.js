@@ -29,7 +29,7 @@ const Section = ({data: {id, title, complete, comments_attributes}, newComment, 
       {renderComments()}
 
       <div className="form-check completed-group">
-        <label class="toggleButton">
+        <label className="toggleButton">
           <input type="checkbox" checked={complete} onChange={handleChange} name={title} inspection={inspection} />
           <div>
             <svg viewBox="0 0 44 44">
