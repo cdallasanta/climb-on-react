@@ -98,6 +98,16 @@ module Api::V1
               :id,
               :content
             ]
+          ],
+          :ropes_attributes => [
+            :id,
+            :climbs_attributes => [
+              :id,
+              :block_1,
+              :block_2,
+              :block_3,
+              :block_4
+            ]
           ]
         ]
       )
