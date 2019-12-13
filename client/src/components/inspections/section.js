@@ -22,12 +22,13 @@ const Section = ({data: {id, title, complete, comments_attributes}, newComment, 
   return(
     <div className={`form-group ${complete ? "complete":"incomplete"}`} id={`section-${id}`} >
       <h2>{title}</h2>
-      <div className="instructions-text">
-        {instructions}
+      <div className={`collapsible ${complete ? "complete":"incomplete"}`} >
+        <div className="instructions-text">
+          {instructions}
+        </div>
+
+        {renderComments()}
       </div>
-
-      {renderComments()}
-
       <div className="form-check completed-group">
         <label className="toggleButton">
           <input type="checkbox" checked={complete} onChange={handleChange} name={title} inspection={inspection} />

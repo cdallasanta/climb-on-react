@@ -101,6 +101,19 @@ body.preuse_inspections{
     border: 3px solid #242700;
   }
 
+  .collapsible {
+    transform: scaleY(1);
+    transform-origin: top;
+    transition: transform 0.1s ease;
+    position: relative;
+  }
+
+  .collapsible.complete {
+    transform: scaleY(0);  
+    overflow: hidden;
+    position: absolute;
+  }
+
   // animation for checkbox
   // from https://codepen.io/aaroniker/pen/rZPeYQ
   .toggleButton {
