@@ -10,7 +10,7 @@ module Api::V1
       @site.elements.each do |elem|
         insp = elem.preuse_inspections.find_by(date: Date.today)
         if insp
-          status = {setup: insp.setup.status}
+          status = {id: elem.id, setup: insp.setup.status}
           if insp.takedown
             status[:takedown] = insp.takedown.status
           else
@@ -18,6 +18,7 @@ module Api::V1
           end
         else
           status = {
+            id: elem.id,
             setup: "not started",
             takedown: "not started"
           }

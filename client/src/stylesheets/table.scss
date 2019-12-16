@@ -5,10 +5,16 @@ div.table {
 
 div.table-head {
   display: table-header-group;
+  background-color: gray;
+  font-weight: bold;
+  font-size: 25px;
 }
 
 div.th, div.td {
   display: table-cell;
+  padding: 10px;
+  text-align: justify;
+  border-bottom: 1px solid black;
 }
 
 div.table-body {
