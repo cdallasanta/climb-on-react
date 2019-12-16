@@ -3,5 +3,30 @@ module Api::V1
     def show
       render json: Site.find(params[:id])
     end
+
+    def status
+      @site = Site.find(params[:site_id])
+      agg = {}
+      @site.elements.each do |elem|
+        insp = elem.preuse_inspections.find_by(date: Date.today)
+        if insp
+          status = {setup: insp.setup.status}
+          if insp.takedown
+            status[:takedown] = insp.takedown.status
+          else
+            status[:takedown] = "not started"
+          end
+        else
+          status = {
+            setup: "not started",
+            takedown: "not started"
+          }
+        end
+
+        agg[elem.name] = status
+      end
+
+      render json: agg
+    end
   end
 end
