@@ -58,7 +58,7 @@ class Home extends Component {
             <Route path="/periodic_inspections"
               component={PeriodicInspectionContainer}
             />
-            <Route path="/"
+            <Route path="/dashboard"
               component={Dashboard}
             />
           </Switch>

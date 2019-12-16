@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import "../stylesheets/elements.scss";
 
 class Dashboard extends Component {
+
   render() {
     return (
       <div className="dashboard">
