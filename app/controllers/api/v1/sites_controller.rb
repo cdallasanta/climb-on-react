@@ -5,10 +5,11 @@ module Api::V1
     end
 
     def status
+      params[:date] ? date = params[:date] : date = Date.today
       @site = Site.find(params[:site_id])
       agg = {}
       @site.elements.each do |elem|
-        insp = elem.preuse_inspections.find_by(date: Date.today)
+        insp = elem.preuse_inspections.find_by(date: date)
         if insp
           status = {id: elem.id, setup: insp.setup.status}
           if insp.takedown

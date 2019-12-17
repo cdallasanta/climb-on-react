@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       resources :users, only: [:show, :create, :update]
 
       resources :sites, only: [:show] do
-        get '/status', to: "sites#status"
+        get '/status/:date', to: "sites#status"
       end
 
       resources :elements, only: [:index, :show, :edit, :update] do

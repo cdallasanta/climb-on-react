@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Dashboard from './dashboard';
+import Dashboard from '../components/dashboard';
 
 
 class AdminContainer extends Component {

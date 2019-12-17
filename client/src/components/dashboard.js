@@ -7,7 +7,8 @@ import "../stylesheets/table.scss";
 class Dashboard extends Component {
   state = {
     elements: [],
-    lastUpdated: Date.now()
+    lastUpdated: Date.now(),
+    date: new Date()
   }
 
   componentDidMount() {
@@ -15,13 +16,23 @@ class Dashboard extends Component {
     setInterval(this.updateState, 60000);
   }
 
+  componentWillUnmount(){
+    clearInterval();
+  }
+
   updateState = () => {
-    axios.get(`/api/v1/sites/${this.props.currentUser.site_id}/status`)
+    axios.get(`/api/v1/sites/${this.props.currentUser.site_id}/status/${this.state.date}`)
     .then(response => this.setState({
       elements: response.data,
       lastUpdated: Date.now()
     }))
     .catch(error => console.log(error))
+  }
+
+  handleChange = event => {
+    this.setState({date: event.target.value}, () =>{
+      this.updateState();
+    });
   }
 
   renderInspectionTable = () => {
@@ -41,11 +52,12 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="dashboard">
+        <input type="date" value={this.state.date} onChange={this.handleChange} />
         <div className="table">
           <div className="table-head">
             <div className="th">Element</div>
-            <div className="th">Today's Setup</div>
-            <div className="th">Today's Takedown</div>
+            <div className="th">Setup</div>
+            <div className="th">Takedown</div>
             <div className="th"></div>
           </div>
           <div className="table-body">
